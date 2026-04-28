@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多洛米蒂徒步權威指南 (2026) | 40 條經典路線解析</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #10b981;
+            --difficulty-easy: #10b981;
+            --difficulty-medium: #f59e0b;
+            --difficulty-hard: #ef4444;
+            --glass: rgba(255, 255, 255, 0.8);
+            --glass-dark: rgba(15, 23, 42, 0.8);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, .font-display {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .hero-section {
+            position: relative;
+            height: 60vh;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: var(--primary);
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+            transform: scale(1.05);
+            transition: transform 10s linear;
+        }
+
+        .hero-section:hover .hero-bg {
+            transform: scale(1);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background: linear-gradient(to top, #f8fafc, transparent);
+        }
+
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+        }
+
+        .difficulty-tag {
+            padding: 2px 10px;
+            border-radius: 99px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .tag-easy { background: #dcfce7; color: #166534; }
+        .tag-medium { background: #fef3c7; color: #92400e; }
+        .tag-hard { background: #fee2e2; color: #991b1b; }
+
+        .search-container {
+            transition: all 0.3s ease;
+        }
+
+        .search-container:focus-within {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .float-animation {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .hike-row {
+            transition: all 0.2s ease;
+        }
+
+        .hike-row:hover {
+            background-color: #f1f5f9;
+            transform: scale(1.002);
+        }
+
+        .card-logic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Responsive Table */
+        @media (max-width: 768px) {
+            .hike-table thead {
+                display: none;
+            }
+            .hike-table tr {
+                display: block;
+                margin-bottom: 1rem;
+                border: 1px solid #e2e8f0;
+                border-radius: 0.75rem;
+                background: white;
+                padding: 1rem;
+            }
+            .hike-table td {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.5rem 0;
+                border-bottom: 1px solid #f1f5f9;
+            }
+            .hike-table td:last-child {
+                border-bottom: none;
+            }
+            .hike-table td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                color: #64748b;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero-section text-white">
+        <img src="images/hero_dolomites.png" alt="Dolomites" class="hero-bg">
+        <div class="hero-overlay"></div>
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+            <span class="inline-block px-4 py-1 rounded-full bg-emerald-500/20 backdrop-blur-md border border-emerald-400/30 text-emerald-300 font-semibold text-sm mb-4 tracking-wider uppercase">Moon & Honey Travel Authority Guide</span>
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">多洛米蒂 40 條經典徒步<br><span class="text-emerald-400">權威指南 (2026)</span></h1>
+            <p class="text-lg md:text-xl text-slate-200 font-light max-w-2xl mx-auto leading-relaxed">
+                涵蓋從休閒散步到峰頂挑戰的全維度解析，助您完美規劃這場「世界最美山脈」的探險旅程。
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 -mt-16 relative z-20 pb-20">
+        
+        <!-- Quick Insight Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div class="glass-card p-6 rounded-2xl flex items-start gap-4 hover:shadow-xl transition-all group">
+                <div class="bg-blue-500/10 p-3 rounded-xl group-hover:bg-blue-500/20 transition-colors">
+                    <i data-lucide="credit-card" class="text-blue-600"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-slate-900 mb-1">卡別選擇邏輯</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">Val Gardena 選 Gardena Card；跨區選 SuperSummer 點數卡。</p>
+                </div>
+            </div>
+            <div class="glass-card p-6 rounded-2xl flex items-start gap-4 hover:shadow-xl transition-all group">
+                <div class="bg-emerald-500/10 p-3 rounded-xl group-hover:bg-emerald-500/20 transition-colors">
+                    <i data-lucide="shopping-cart" class="text-emerald-600"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-slate-900 mb-1">新手/採買行程</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">首推 IperTosano 大採買，Tre Cime 與 Lago di Braies 完美野餐組合。</p>
+                </div>
+            </div>
+            <div class="glass-card p-6 rounded-2xl flex items-start gap-4 hover:shadow-xl transition-all group">
+                <div class="bg-amber-500/10 p-3 rounded-xl group-hover:bg-amber-500/20 transition-colors">
+                    <i data-lucide="mountain" class="text-amber-600"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-slate-900 mb-1">難度警示</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">「困難」路線涉及大海拔落差或碎石坡，專業裝備（登山杖/鞋）必備。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Strategy Section -->
+        <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 mb-12">
+            <h2 class="text-2xl font-bold text-slate-900 mb-8 flex items-center gap-3">
+                <i data-lucide="compass" class="text-emerald-500"></i> 深度規劃策略
+            </h2>
+            <div class="card-logic-grid">
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200/60">
+                    <h4 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                        <span class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs">01</span>
+                        卡別選擇策略
+                    </h4>
+                    <ul class="space-y-3 text-sm text-slate-600">
+                        <li class="flex items-start gap-2">
+                            <span class="text-emerald-500 mt-1">•</span>
+                            <span><b>Val Gardena：</b>Seceda 段點數卡不支援，必買 <b>Gardena Card</b>。</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-emerald-500 mt-1">•</span>
+                            <span><b>跨區移動：</b>彈性最高首選 <b>SuperSummer Card</b> 點數卡。</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-emerald-500 mt-1">•</span>
+                            <span><b>省錢秘笈：</b>Val di Funes 與 Tre Cime 周邊免纜車，改付停車費。</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200/60">
+                    <h4 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                        <span class="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-xs">02</span>
+                        補給與野餐攻略
+                    </h4>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        強烈建議先在 <b>IperTosano Vago</b> 完成大採買。車上備足乾糧後，將 <b>Tre Cime (1)</b> 與 <b>Lago di Braies (6)</b> 排在一起，利用那裡的景觀停車場進行高山野餐，體驗絕佳。
+                    </p>
+                    <div class="flex gap-2">
+                        <span class="px-3 py-1 bg-white border border-slate-200 rounded-full text-xs font-semibold text-slate-500">#野餐聖地</span>
+                        <span class="px-3 py-1 bg-white border border-slate-200 rounded-full text-xs font-semibold text-slate-500">#高CP值補給</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Master List Section -->
+        <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-100">
+            <!-- Table Header / Search -->
+            <div class="p-6 md:p-8 border-b border-slate-100 bg-slate-50/50">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-900 mb-1">40 條經典路線 Master List</h2>
+                        <p class="text-sm text-slate-500">按區域、卡別、難易度全方位解析 (2026 最新版)</p>
+                    </div>
+                    <div class="relative max-w-md w-full">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <i data-lucide="search" class="w-5 h-5 text-slate-400"></i>
+                        </div>
+                        <input type="text" id="hikeSearch" placeholder="搜索路線、山谷或難度..." 
+                            class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all shadow-sm">
+                    </div>
+                </div>
+                
+                <!-- Filters -->
+                <div class="flex flex-wrap gap-2 mt-6">
+                    <button onclick="filterHikes('all')" class="filter-btn active px-4 py-2 rounded-xl text-xs font-bold border border-slate-200 bg-white hover:bg-slate-50 transition-all active:bg-emerald-500 active:text-white active:border-emerald-500">全部</button>
+                    <button onclick="filterHikes('容易')" class="filter-btn px-4 py-2 rounded-xl text-xs font-bold border border-slate-200 bg-white hover:bg-slate-50 transition-all">容易</button>
+                    <button onclick="filterHikes('中等')" class="filter-btn px-4 py-2 rounded-xl text-xs font-bold border border-slate-200 bg-white hover:bg-slate-50 transition-all">中等</button>
+                    <button onclick="filterHikes('困難')" class="filter-btn px-4 py-2 rounded-xl text-xs font-bold border border-slate-200 bg-white hover:bg-slate-50 transition-all">困難</button>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="overflow-x-auto">
+                <table class="w-full hike-table text-left border-collapse">
+                    <thead class="bg-slate-50 text-slate-500 text-xs font-bold uppercase tracking-wider">
+                        <tr>
+                            <th class="px-6 py-4"># 路線名稱</th>
+                            <th class="px-6 py-4">區域 / 山谷</th>
+                            <th class="px-6 py-4">推薦纜車</th>
+                            <th class="px-6 py-4">適用卡別</th>
+                            <th class="px-6 py-4">難易度</th>
+                        </tr>
+                    </thead>
+                    <tbody id="hikeList" class="text-sm divide-y divide-slate-100">
+                        <!-- JS handles population -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Empty State -->
+            <div id="noResults" class="hidden py-20 text-center">
+                <div class="mb-4 flex justify-center">
+                    <i data-lucide="mountain-snow" class="w-16 h-16 text-slate-200"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-400">找不到符合條件的路線</h3>
+                <p class="text-sm text-slate-400">換個關鍵字試試看吧！</p>
+            </div>
+        </div>
+
+        <!-- Footer Contact -->
+        <div class="mt-16 text-center">
+            <div class="inline-block p-1 bg-white rounded-full shadow-lg border border-slate-100 mb-6">
+                <div class="px-6 py-3 bg-emerald-500 rounded-full text-white font-bold text-sm cursor-pointer hover:bg-emerald-600 transition-all">
+                    打算在 Cortina 停留幾天？讓我幫您篩選組合！
+                </div>
+            </div>
+            <p class="text-xs text-slate-400">© 2026 Dolomites Authority Guide. Data sourced from Moon & Honey Travel.</p>
+        </div>
+
+    </main>
+
+    <script>
+        const hikes = [
+            { id: 1, name: "Tre Cime di Lavaredo", region: "Sexten / Cortina", cable: "無 (需收費公路)", card: "N/A", trailhead: "Rifugio Auronzo", diff: "中等" },
+            { id: 2, name: "Cadini di Misurina", region: "Sexten / Cortina", cable: "無", card: "N/A", trailhead: "Rifugio Auronzo", diff: "容易" },
+            { id: 3, name: "Seceda Ridgeline", region: "Val Gardena", cable: "Ortisei-Seceda", card: "Gardena Card", trailhead: "Ortisei 纜車站頂", diff: "容易" },
+            { id: 4, name: "Alpe di Siusi Circuit", region: "Alpe di Siusi", cable: "Alpe di Siusi", card: "Gardena Card / SS", trailhead: "Compaccio", diff: "容易" },
+            { id: 5, name: "Adolf Munkel Trail", region: "Val di Funes", cable: "無", card: "N/A", trailhead: "Zans (Zannes)", diff: "中等" },
+            { id: 6, name: "Lago di Braies", region: "Braies Valley", cable: "無", card: "N/A", trailhead: "Lago di Braies", diff: "容易" },
+            { id: 7, name: "Lago di Sorapis", region: "Cortina", cable: "無", card: "N/A", trailhead: "Passo Tre Croci", diff: "中等" },
+            { id: 8, name: "Cinque Torri Loop", region: "Cortina", cable: "Cinque Torri", card: "SuperSummer", trailhead: "Rifugio Bai de Dones", diff: "中等" },
+            { id: 9, name: "Croda da Lago", region: "Cortina", cable: "無", card: "N/A", trailhead: "Ponte de Ru Curto", diff: "中等" },
+            { id: 10, name: "Tofana di Rozes Circuit", region: "Cortina", cable: "無", card: "N/A", trailhead: "Rifugio Dibona", diff: "困難" },
+            { id: 11, name: "Sassolungo Circuit", region: "Val Gardena", cable: "Forcella Sassolungo", card: "Gardena Card", trailhead: "Passo Sella", diff: "中等" },
+            { id: 12, name: "Resciesa to Seceda", region: "Val Gardena", cable: "Resciesa / Seceda", card: "Gardena Card", trailhead: "Ortisei Resciesa", diff: "困難" },
+            { id: 13, name: "Monte Pic", region: "Val Gardena", cable: "無", card: "N/A", trailhead: "S. Cristina", diff: "中等" },
+            { id: 14, name: "Col dala Pieres", region: "Val Gardena", cable: "Col Raiser", card: "Gardena Card / SS", trailhead: "S. Cristina", diff: "困難" },
+            { id: 15, name: "Piz Duleda", region: "Val Gardena", cable: "Col Raiser", card: "Gardena Card / SS", trailhead: "S. Cristina", diff: "困難" },
+            { id: 16, name: "Vallunga Valley", region: "Val Gardena", cable: "無", card: "N/A", trailhead: "Selva (Wolkenstein)", diff: "容易" },
+            { id: 17, name: "Gran Cir", region: "Val Gardena", cable: "無", card: "N/A", trailhead: "Passo Gardena", diff: "中等" },
+            { id: 18, name: "Sass de Putia Circuit", region: "Alta Badia", cable: "無", card: "N/A", trailhead: "Passo delle Erbe", diff: "中等" },
+            { id: 19, name: "Armentara Meadows", region: "Alta Badia", cable: "Santa Croce", card: "SS / Alta Badia", trailhead: "Badia (San Leonardo)", diff: "容易" },
+            { id: 20, name: "Rifugio Genova Loop", region: "Val di Funes", cable: "無", card: "N/A", trailhead: "Zans (Zannes)", diff: "中等" },
+            { id: 21, name: "Monte Specie", region: "Val Pusteria", cable: "無", card: "N/A", trailhead: "Prato Piazza", diff: "容易" },
+            { id: 22, name: "Gaisl High Trail", region: "Val Pusteria", cable: "無", card: "N/A", trailhead: "Prato Piazza", diff: "中等" },
+            { id: 23, name: "Val Fiscalina Walk", region: "Sexten", cable: "無", card: "N/A", trailhead: "Bad Moos", diff: "容易" },
+            { id: 24, name: "Torre dei Scarperi", region: "Sexten", cable: "無", card: "N/A", trailhead: "Val Fiscalina", diff: "困難" },
+            { id: 25, name: "Passo Giau to Mondeval", region: "Cortina", cable: "無", card: "N/A", trailhead: "Passo Giau", diff: "中等" },
+            { id: 26, name: "Rifugio Nuvolau", region: "Cortina", cable: "Fedare / Cinque Torri", card: "SuperSummer", trailhead: "Passo Giau / Fedare", diff: "中等" },
+            { id: 27, name: "Baita Segantini", region: "S. Martino", cable: "無", card: "N/A", trailhead: "Passo Rolle", diff: "容易" },
+            { id: 28, name: "Pala di San Martino Loop", region: "S. Martino", cable: "Rosetta", card: "SS / SMDC Card", trailhead: "S. Martino 纜車站", diff: "困難" },
+            { id: 29, name: "Hans & Paula Steger", region: "Alpe di Siusi", cable: "Alpe di Siusi", card: "Gardena Card / SS", trailhead: "Compaccio", diff: "容易" },
+            { id: 30, name: "Lago di Braies to Hochalpenkopf", region: "Braies", cable: "無", card: "N/A", trailhead: "Lago di Braies", diff: "困難" },
+            { id: 31, name: "Sass da Ciampac", region: "Alta Badia", cable: "Dantercepies", card: "SS / Gardena Card", trailhead: "Passo Gardena", diff: "困難" },
+            { id: 32, name: "Cima Pisciadù", region: "Alta Badia", cable: "Frara / Pisciadù", card: "SuperSummer", trailhead: "Passo Gardena", diff: "困難" },
+            { id: 33, name: "Vajolet Towers", region: "Val di Fassa", cable: "Vajolet", card: "SS / Panorama Pass", trailhead: "Pera di Fassa", diff: "困難" },
+            { id: 34, name: "Val Venegia to Mulaz", region: "S. Martino", cable: "無", card: "N/A", trailhead: "Val Venegia", diff: "困難" },
+            { id: 35, name: "Rosetta to Pradidali", region: "S. Martino", cable: "Rosetta", card: "SS / SMDC Card", trailhead: "S. Martino 纜車站", diff: "困難" },
+            { id: 36, name: "Capanna Alpina to Fanes", region: "Alta Badia", cable: "無", card: "N/A", trailhead: "Capanna Alpina", diff: "中等" },
+            { id: 37, name: "Cima della Vezzana", region: "S. Martino", cable: "Rosetta", card: "SuperSummer", trailhead: "S. Martino 纜車站", diff: "困難" },
+            { id: 38, name: "Tullen Summit", region: "Val di Funes", cable: "無", card: "N/A", trailhead: "Zans (Zannes)", diff: "困難" },
+            { id: 39, name: "Rifugio Bolzano Loop", region: "Alpe di Siusi", cable: "Alpe di Siusi", card: "Gardena Card / SS", trailhead: "Compaccio", diff: "困難" },
+            { id: 40, name: "Santa Maddalena Trail", region: "Val di Funes", cable: "無", card: "N/A", trailhead: "S. Maddalena", diff: "容易" }
+        ];
+
+        function renderHikes(data) {
+            const list = document.getElementById('hikeList');
+            const noResults = document.getElementById('noResults');
+            list.innerHTML = '';
+            
+            if (data.length === 0) {
+                noResults.classList.remove('hidden');
+                return;
+            } else {
+                noResults.classList.add('hidden');
+            }
+
+            data.forEach(hike => {
+                const tr = document.createElement('tr');
+                tr.className = 'hike-row group';
+                
+                const diffClass = hike.diff === '容易' ? 'tag-easy' : (hike.diff === '中等' ? 'tag-medium' : 'tag-hard');
+                
+                tr.innerHTML = `
+                    <td class="px-6 py-4 font-bold text-slate-800" data-label="路線名稱">
+                        <div class="flex flex-col">
+                            <span>${hike.id}. ${hike.name}</span>
+                            <span class="md:hidden text-[10px] text-slate-400 font-normal">起點: ${hike.trailhead}</span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 text-slate-600" data-label="區域">${hike.region}</td>
+                    <td class="px-6 py-4 text-slate-600" data-label="推薦纜車">
+                        <div class="flex items-center gap-1">
+                            <i data-lucide="${hike.cable === '無' ? 'car' : 'cable-car'}" class="w-3 h-3 text-slate-400"></i>
+                            ${hike.cable}
+                        </div>
+                    </td>
+                    <td class="px-6 py-4" data-label="適用卡別">
+                        <span class="text-xs font-semibold px-2 py-1 rounded bg-slate-100 text-slate-500">${hike.card}</span>
+                    </td>
+                    <td class="px-6 py-4" data-label="難度">
+                        <span class="difficulty-tag ${diffClass}">${hike.diff}</span>
+                    </td>
+                `;
+                list.appendChild(tr);
+            });
+            lucide.createIcons();
+        }
+
+        function filterHikes(diff) {
+            // Update UI
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-emerald-500', 'text-white', 'border-emerald-500');
+                if (btn.innerText === diff || (diff === 'all' && btn.innerText === '全部')) {
+                    btn.classList.add('active', 'bg-emerald-500', 'text-white', 'border-emerald-500');
+                }
+            });
+
+            if (diff === 'all') {
+                renderHikes(hikes);
+            } else {
+                const filtered = hikes.filter(h => h.diff === diff);
+                renderHikes(filtered);
+            }
+        }
+
+        // Search logic
+        document.getElementById('hikeSearch').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = hikes.filter(h => 
+                h.name.toLowerCase().includes(term) || 
+                h.region.toLowerCase().includes(term) || 
+                h.diff.toLowerCase().includes(term)
+            );
+            renderHikes(filtered);
+        });
+
+        // Initial render
+        renderHikes(hikes);
+        lucide.createIcons();
+
+    </script>
+</body>
+</html>
