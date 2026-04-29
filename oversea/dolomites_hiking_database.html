@@ -175,8 +175,10 @@
                                 <tr>
                                     <th class="px-6 py-4">路線名稱</th>
                                     <th class="px-6 py-4">區域</th>
+                                    <th class="px-6 py-4">纜車與價格 (2026)</th>
+                                    <th class="px-6 py-4">適用卡別</th>
                                     <th class="px-6 py-4">難度</th>
-                                    <th class="px-6 py-4 text-center">操作</th>
+                                    <th class="px-6 py-4 text-center">地圖</th>
                                 </tr>
                             </thead>
                             <tbody id="hikeList" class="text-sm divide-y divide-slate-100">
@@ -215,10 +217,10 @@
 
     <script>
         const hikes = [
-            { id: 1, name: "Tre Cime di Lavaredo", region: "Sexten / Cortina", cable: "無 (需收費公路)", price: "€40 (Road)", card: "N/A", diff: "中等", ll: "46.612,12.302", z: 14 },
+            { id: 1, name: "Tre Cime di Lavaredo", region: "Sexten / Cortina", cable: "公路 (預約制)", price: "€40", card: "N/A", diff: "中等", ll: "46.612,12.302", z: 14 },
             { id: 2, name: "Cadini di Misurina", region: "Sexten / Cortina", cable: "無", price: "N/A", card: "N/A", diff: "容易", ll: "46.612,12.302", z: 15 },
-            { id: 3, name: "Seceda Ridgeline", region: "Val Gardena", cable: "Ortisei-Seceda", price: "€45", card: "Gardena Card", diff: "容易", ll: "46.598,11.724", z: 15 },
-            { id: 4, name: "Alpe di Siusi Circuit", region: "Alpe di Siusi", cable: "Alpe di Siusi", price: "€28", card: "Gardena Card / SS", diff: "容易", ll: "46.541,11.621", z: 14 },
+            { id: 3, name: "Seceda Ridgeline", region: "Val Gardena", cable: "Ortisei-Seceda", price: "€52-74", card: "Gardena Card / 點數", diff: "容易", ll: "46.598,11.724", z: 15 },
+            { id: 4, name: "Alpe di Siusi Circuit", region: "Alpe di Siusi", cable: "Alpe di Siusi", price: "€28", card: "Gardena / SS", diff: "容易", ll: "46.541,11.621", z: 14 },
             { id: 5, name: "Adolf Munkel Trail", region: "Val di Funes", cable: "無", price: "N/A", card: "N/A", diff: "中等", ll: "46.637,11.758", z: 15 },
             { id: 6, name: "Lago di Braies", region: "Braies Valley", cable: "無", price: "N/A", card: "N/A", diff: "容易", ll: "46.694,12.085", z: 15 },
             { id: 7, name: "Lago di Sorapis", region: "Cortina", cable: "無", price: "N/A", card: "N/A", diff: "中等", ll: "46.556,12.203", z: 14 },
@@ -242,18 +244,18 @@
             { id: 25, name: "Passo Giau to Mondeval", region: "Cortina", cable: "無", price: "N/A", card: "N/A", diff: "中等", ll: "46.480,12.080", z: 14 },
             { id: 26, name: "Rifugio Nuvolau", region: "Cortina", cable: "Fedare / Cinque Torri", price: "€28", card: "SuperSummer", diff: "中等", ll: "46.500,12.040", z: 15 },
             { id: 27, name: "Baita Segantini", region: "S. Martino", cable: "無", price: "N/A", card: "N/A", diff: "容易", ll: "46.310,11.796", z: 15 },
-            { id: 28, name: "Pala di San Martino Loop", region: "S. Martino", cable: "Rosetta", price: "€28", card: "SS / SMDC Card", diff: "困難", ll: "46.260,11.840", z: 14 },
-            { id: 29, name: "Hans & Paula Steger", region: "Alpe di Siusi", cable: "Alpe di Siusi", price: "€28", card: "Gardena Card / SS", diff: "容易", ll: "46.529,11.643", z: 14 },
+            { id: 28, name: "Pala di San Martino Loop", region: "S. Martino", cable: "Rosetta", price: "€32-38", card: "SS / SMDC", diff: "困難", ll: "46.260,11.840", z: 14 },
+            { id: 29, name: "Hans & Paula Steger", region: "Alpe di Siusi", cable: "Alpe di Siusi", price: "€28", card: "Gardena / SS", diff: "容易", ll: "46.529,11.643", z: 14 },
             { id: 30, name: "Lago di Braies to Hochalpenkopf", region: "Braies", cable: "無", price: "N/A", card: "N/A", diff: "困難", ll: "46.698,12.019", z: 14 },
-            { id: 31, name: "Sass da Ciampac", region: "Alta Badia", cable: "Dantercepies", price: "€28", card: "SS / Gardena Card", diff: "困難", ll: "46.550,11.830", z: 14 },
+            { id: 31, name: "Sass da Ciampac", region: "Alta Badia", cable: "Dantercepies", price: "€28", card: "SS / Gardena", diff: "困難", ll: "46.550,11.830", z: 14 },
             { id: 32, name: "Cima Pisciadù", region: "Alta Badia", cable: "Frara / Pisciadù", price: "€28", card: "SuperSummer", diff: "困難", ll: "46.540,11.840", z: 15 },
             { id: 33, name: "Vajolet Towers", region: "Val di Fassa", cable: "Vajolet", price: "€28", card: "SS / Panorama Pass", diff: "困難", ll: "46.470,11.630", z: 15 },
             { id: 34, name: "Val Venegia to Mulaz", region: "S. Martino", cable: "無", price: "N/A", card: "N/A", diff: "困難", ll: "46.320,11.810", z: 14 },
-            { id: 35, name: "Rosetta to Pradidali", region: "S. Martino", cable: "Rosetta", price: "€28", card: "SS / SMDC Card", diff: "困難", ll: "46.250,11.850", z: 14 },
+            { id: 35, name: "Rosetta to Pradidali", region: "S. Martino", cable: "Rosetta", price: "€32-38", card: "SS / SMDC", diff: "困難", ll: "46.250,11.850", z: 14 },
             { id: 36, name: "Capanna Alpina to Fanes", region: "Alta Badia", cable: "無", price: "N/A", card: "N/A", diff: "中等", ll: "46.570,12.000", z: 14 },
-            { id: 37, name: "Cima della Vezzana", region: "S. Martino", cable: "Rosetta", price: "€28", card: "SuperSummer", diff: "困難", ll: "46.300,11.820", z: 15 },
+            { id: 37, name: "Cima della Vezzana", region: "S. Martino", cable: "Rosetta", price: "€32-38", card: "SuperSummer", diff: "困難", ll: "46.300,11.820", z: 15 },
             { id: 38, name: "Tullen Summit", region: "Val di Funes", cable: "無", price: "N/A", card: "N/A", diff: "困難", ll: "46.630,11.770", z: 15 },
-            { id: 39, name: "Rifugio Bolzano Loop", region: "Alpe di Siusi", cable: "Alpe di Siusi", price: "€28", card: "Gardena Card / SS", diff: "困難", ll: "46.510,11.600", z: 14 },
+            { id: 39, name: "Rifugio Bolzano Loop", region: "Alpe di Siusi", cable: "Alpe di Siusi", price: "€28", card: "Gardena / SS", diff: "困難", ll: "46.510,11.600", z: 14 },
             { id: 40, name: "Santa Maddalena Trail", region: "Val di Funes", cable: "無", price: "N/A", card: "N/A", diff: "容易", ll: "46.643,11.795", z: 15 }
         ];
 
@@ -292,18 +294,24 @@
                 tr.onclick = () => updateMap(hike);
                 
                 const diffClass = hike.diff === '容易' ? 'tag-easy' : (hike.diff === '中等' ? 'tag-medium' : 'tag-hard');
-                const priceBadge = hike.price !== 'N/A' ? `<span class="ml-2 text-[10px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded font-mono">${hike.price}</span>` : '';
+                const priceText = hike.price !== 'N/A' ? `<span class="text-emerald-600 font-bold">${hike.price}</span>` : '<span class="text-slate-300">-</span>';
                 
                 tr.innerHTML = `
                     <td class="px-6 py-4 font-bold text-slate-800">
                         <div class="flex flex-col">
                             <span>${hike.id}. ${hike.name}</span>
-                            <span class="text-[10px] text-slate-400 font-normal mt-1 flex items-center gap-1">
-                                <i data-lucide="info" class="w-3 h-3"></i> 纜車：${hike.cable}${priceBadge}
-                            </span>
                         </div>
                     </td>
                     <td class="px-6 py-4 text-slate-600">${hike.region}</td>
+                    <td class="px-6 py-4">
+                        <div class="flex flex-col">
+                            <span class="text-slate-700 font-medium">${hike.cable}</span>
+                            <span class="text-[10px] mt-0.5">${priceText}</span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="text-xs text-slate-500 font-medium">${hike.card}</span>
+                    </td>
                     <td class="px-6 py-4">
                         <span class="difficulty-tag ${diffClass}">${hike.diff}</span>
                     </td>
