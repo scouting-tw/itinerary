@@ -260,52 +260,93 @@
                 <i data-lucide="x" class="w-6 h-6 text-slate-600"></i>
             </div>
             
-            <div class="modal-body">
-                <!-- Modal Info (Left) -->
-                <div class="modal-info w-1/3 p-8 bg-slate-50 overflow-y-auto border-r border-slate-100">
-                    <div id="modalHeader" class="mb-8">
-                        <span id="modalDiff" class="difficulty-tag inline-block mb-3">難度</span>
-                        <h2 id="modalTitle" class="text-3xl font-bold text-slate-900 leading-tight">路線名稱</h2>
-                        <p id="modalRegion" class="text-slate-500 font-medium mt-2 flex items-center gap-2">
-                            <i data-lucide="map-pin" class="w-4 h-4"></i> 區域
-                        </p>
-                    </div>
+                <div class="modal-body">
+                    <!-- Modal Info (Left) -->
+                    <div class="modal-info w-1/3 p-8 bg-slate-50 overflow-y-auto border-r border-slate-100">
+                        <div id="modalHeader" class="mb-8">
+                            <span id="modalDiff" class="difficulty-tag inline-block mb-3">難度</span>
+                            <h2 id="modalTitle" class="text-3xl font-bold text-slate-900 leading-tight">路線名稱</h2>
+                            <p id="modalRegion" class="text-slate-500 font-medium mt-2 flex items-center gap-2">
+                                <i data-lucide="map-pin" class="w-4 h-4"></i> 區域
+                            </p>
+                        </div>
 
-                    <div class="space-y-6">
-                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">交通物流 (2026)</h4>
-                            <div class="flex items-center gap-4 mb-4">
-                                <div class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center text-blue-600">
-                                    <i data-lucide="info" class="w-5 h-5"></i>
+                        <div class="space-y-6">
+                            <!-- Route Description -->
+                            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">路線介紹</h4>
+                                <p id="modalDesc" class="text-sm text-slate-600 leading-relaxed italic">
+                                    這是一條精彩的健行路線，帶您領略多洛米蒂的壯麗風光。
+                                </p>
+                            </div>
+
+                            <!-- Trail Stats Grid -->
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+                                    <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">預估時間</h4>
+                                    <p id="modalTime" class="text-sm font-bold text-slate-800">-- 小時</p>
                                 </div>
-                                <div>
-                                    <p id="modalCable" class="text-sm font-bold text-slate-800">纜車名稱</p>
-                                    <p id="modalPrice" class="text-xs text-blue-600 font-mono font-bold mt-0.5">€ 價格</p>
+                                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+                                    <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">距離</h4>
+                                    <p id="modalDist" class="text-sm font-bold text-slate-800">-- km</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+                                    <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">累計上升</h4>
+                                    <p id="modalAscent" class="text-sm font-bold text-emerald-600">+ -- m</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+                                    <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">累計下降</h4>
+                                    <p id="modalDescent" class="text-sm font-bold text-blue-600">- -- m</p>
                                 </div>
                             </div>
-                            <div class="flex items-center gap-4">
-                                <div class="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-600">
-                                    <i data-lucide="credit-card" class="w-5 h-5"></i>
+
+                            <!-- Trailhead & Logistics -->
+                            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">起點與物流</h4>
+                                <div class="space-y-4">
+                                    <div class="flex items-start gap-3">
+                                        <div class="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500 shrink-0">
+                                            <i data-lucide="navigation" class="w-4 h-4"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-[10px] text-slate-400 font-bold uppercase">登山口 / 起點</p>
+                                            <p id="modalTrailhead" class="text-sm font-bold text-slate-800">載入中...</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center text-blue-500 shrink-0">
+                                            <i data-lucide="info" class="w-4 h-4"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-[10px] text-slate-400 font-bold uppercase">2026 纜車/價格</p>
+                                            <p id="modalCable" class="text-sm font-bold text-slate-800">--</p>
+                                            <p id="modalPrice" class="text-xs text-blue-600 font-mono font-bold mt-0.5">--</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <div class="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-500 shrink-0">
+                                            <i data-lucide="credit-card" class="w-4 h-4"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-[10px] text-slate-400 font-bold uppercase">適用卡別</p>
+                                            <p id="modalCard" class="text-sm font-bold text-slate-800">--</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div>
-                                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-tighter">適用卡別</p>
-                                    <p id="modalCard" class="text-sm font-bold text-slate-800 tracking-tight">卡別名稱</p>
-                                </div>
+                            </div>
+
+                            <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm">
+                                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">座標位置</h4>
+                                <p id="modalCoords" class="text-xs font-mono text-slate-600">--</p>
                             </div>
                         </div>
 
-                        <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm">
-                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">座標位置</h4>
-                            <p id="modalCoords" class="text-xs font-mono text-slate-600">46.XXX, 11.XXX</p>
+                        <div class="mt-8 pt-8 border-t border-slate-200">
+                            <p class="text-xs text-slate-400 italic">
+                                * 數據為預估值，具體以現場官網或實際體能為準。
+                            </p>
                         </div>
                     </div>
-
-                    <div class="mt-8 pt-8 border-t border-slate-200">
-                        <p class="text-xs text-slate-400 italic">
-                            * 價格為 2026 年預估值，具體以現場官網為準。點擊地圖右側可開啟導航。
-                        </p>
-                    </div>
-                </div>
 
                 <!-- Modal Map (Right) -->
                 <div class="modal-map w-2/3 relative bg-slate-200">
@@ -327,46 +368,46 @@
 
     <script>
         const hikes = [
-            { id: 1, name: "Tre Cime di Lavaredo", region: "Sexten / Cortina", cable: "公路 (預約制)", price: "€40", card: "N/A", diff: "中等", ll: "46.612,12.302", z: 14 },
-            { id: 2, name: "Cadini di Misurina", region: "Sexten / Cortina", cable: "無", price: "N/A", card: "N/A", diff: "容易", ll: "46.612,12.302", z: 15 },
-            { id: 3, name: "Seceda Ridgeline", region: "Val Gardena", cable: "Ortisei-Seceda", price: "€52-74", card: "Gardena Card / 點數", diff: "容易", ll: "46.598,11.724", z: 15 },
-            { id: 4, name: "Alpe di Siusi Circuit", region: "Alpe di Siusi", cable: "Alpe di Siusi", price: "€28", card: "Gardena / SS", diff: "容易", ll: "46.541,11.621", z: 14 },
-            { id: 5, name: "Adolf Munkel Trail", region: "Val di Funes", cable: "無", price: "N/A", card: "N/A", diff: "中等", ll: "46.637,11.758", z: 15 },
-            { id: 6, name: "Lago di Braies", region: "Braies Valley", cable: "無", price: "N/A", card: "N/A", diff: "容易", ll: "46.694,12.085", z: 15 },
-            { id: 7, name: "Lago di Sorapis", region: "Cortina", cable: "無", price: "N/A", card: "N/A", diff: "中等", ll: "46.556,12.203", z: 14 },
-            { id: 8, name: "Cinque Torri Loop", region: "Cortina", cable: "Cinque Torri", price: "€28", card: "SuperSummer", diff: "中等", ll: "46.518,12.038", z: 15 },
-            { id: 9, name: "Croda da Lago", region: "Cortina", cable: "無", price: "N/A", card: "N/A", diff: "中等", ll: "46.505,12.100", z: 14 },
-            { id: 10, name: "Tofana di Rozes Circuit", region: "Cortina", cable: "無", price: "N/A", card: "N/A", diff: "困難", ll: "46.532,12.046", z: 14 },
-            { id: 11, name: "Sassolungo Circuit", region: "Val Gardena", cable: "Forcella Sassolungo", price: "€45", card: "Gardena Card", diff: "中等", ll: "46.509,11.757", z: 14 },
-            { id: 12, name: "Resciesa to Seceda", region: "Val Gardena", cable: "Resciesa / Seceda", price: "€25 + €45", card: "Gardena Card", diff: "困難", ll: "46.592,11.666", z: 14 },
-            { id: 13, name: "Monte Pic", region: "Val Gardena", cable: "無", price: "N/A", card: "N/A", diff: "中等", ll: "46.568,11.733", z: 15 },
-            { id: 14, name: "Col dala Pieres", region: "Val Gardena", cable: "Col Raiser", price: "€34", card: "Gardena Card / SS", diff: "困難", ll: "46.574,11.755", z: 15 },
-            { id: 15, name: "Piz Duleda", region: "Val Gardena", cable: "Col Raiser", price: "€34", card: "Gardena Card / SS", diff: "困難", ll: "46.574,11.755", z: 15 },
-            { id: 16, name: "Vallunga Valley", region: "Val Gardena", cable: "無", price: "N/A", card: "N/A", diff: "容易", ll: "46.565,11.772", z: 14 },
-            { id: 17, name: "Gran Cir", region: "Val Gardena", cable: "無", price: "N/A", card: "N/A", diff: "中等", ll: "46.550,11.802", z: 15 },
-            { id: 18, name: "Sass de Putia Circuit", region: "Alta Badia", cable: "無", price: "N/A", card: "N/A", diff: "中等", ll: "46.640,11.815", z: 14 },
-            { id: 19, name: "Armentara Meadows", region: "Alta Badia", cable: "Santa Croce", price: "€28", card: "SS / Alta Badia", diff: "容易", ll: "46.617,11.894", z: 14 },
-            { id: 20, name: "Rifugio Genova Loop", region: "Val di Funes", cable: "無", price: "N/A", card: "N/A", diff: "中等", ll: "46.637,11.758", z: 15 },
-            { id: 21, name: "Monte Specie", region: "Val Pusteria", cable: "無", price: "N/A", card: "N/A", diff: "容易", ll: "46.643,12.210", z: 15 },
-            { id: 22, name: "Gaisl High Trail", region: "Val Pusteria", cable: "無", price: "N/A", card: "N/A", diff: "中等", ll: "46.645,12.180", z: 14 },
-            { id: 23, name: "Val Fiscalina Walk", region: "Sexten", cable: "無", price: "N/A", card: "N/A", diff: "容易", ll: "46.652,12.354", z: 13 },
-            { id: 24, name: "Torre dei Scarperi", region: "Sexten", cable: "無", price: "N/A", card: "N/A", diff: "困難", ll: "46.660,12.294", z: 13 },
-            { id: 25, name: "Passo Giau to Mondeval", region: "Cortina", cable: "無", price: "N/A", card: "N/A", diff: "中等", ll: "46.480,12.080", z: 14 },
-            { id: 26, name: "Rifugio Nuvolau", region: "Cortina", cable: "Fedare / Cinque Torri", price: "€28", card: "SuperSummer", diff: "中等", ll: "46.500,12.040", z: 15 },
-            { id: 27, name: "Baita Segantini", region: "S. Martino", cable: "無", price: "N/A", card: "N/A", diff: "容易", ll: "46.310,11.796", z: 15 },
-            { id: 28, name: "Pala di San Martino Loop", region: "S. Martino", cable: "Rosetta", price: "€32-38", card: "SS / SMDC", diff: "困難", ll: "46.260,11.840", z: 14 },
-            { id: 29, name: "Hans & Paula Steger", region: "Alpe di Siusi", cable: "Alpe di Siusi", price: "€28", card: "Gardena / SS", diff: "容易", ll: "46.529,11.643", z: 14 },
-            { id: 30, name: "Lago di Braies to Hochalpenkopf", region: "Braies", cable: "無", price: "N/A", card: "N/A", diff: "困難", ll: "46.698,12.019", z: 14 },
-            { id: 31, name: "Sass da Ciampac", region: "Alta Badia", cable: "Dantercepies", price: "€28", card: "SS / Gardena", diff: "困難", ll: "46.550,11.830", z: 14 },
-            { id: 32, name: "Cima Pisciadù", region: "Alta Badia", cable: "Frara / Pisciadù", price: "€28", card: "SuperSummer", diff: "困難", ll: "46.540,11.840", z: 15 },
-            { id: 33, name: "Vajolet Towers", region: "Val di Fassa", cable: "Vajolet", price: "€28", card: "SS / Panorama Pass", diff: "困難", ll: "46.470,11.630", z: 15 },
-            { id: 34, name: "Val Venegia to Mulaz", region: "S. Martino", cable: "無", price: "N/A", card: "N/A", diff: "困難", ll: "46.320,11.810", z: 14 },
-            { id: 35, name: "Rosetta to Pradidali", region: "S. Martino", cable: "Rosetta", price: "€32-38", card: "SS / SMDC", diff: "困難", ll: "46.250,11.850", z: 14 },
-            { id: 36, name: "Capanna Alpina to Fanes", region: "Alta Badia", cable: "無", price: "N/A", card: "N/A", diff: "中等", ll: "46.570,12.000", z: 14 },
-            { id: 37, name: "Cima della Vezzana", region: "S. Martino", cable: "Rosetta", price: "€32-38", card: "SuperSummer", diff: "困難", ll: "46.300,11.820", z: 15 },
-            { id: 38, name: "Tullen Summit", region: "Val di Funes", cable: "無", price: "N/A", card: "N/A", diff: "困難", ll: "46.630,11.770", z: 15 },
-            { id: 39, name: "Rifugio Bolzano Loop", region: "Alpe di Siusi", cable: "Alpe di Siusi", price: "€28", card: "Gardena / SS", diff: "困難", ll: "46.510,11.600", z: 14 },
-            { id: 40, name: "Santa Maddalena Trail", region: "Val di Funes", cable: "無", price: "N/A", card: "N/A", diff: "容易", ll: "46.643,11.795", z: 15 }
+            { id: 1, name: "Tre Cime di Lavaredo", region: "Sexten / Cortina", cable: "公路 (預約制)", price: "€40", card: "N/A", diff: "中等", ll: "46.612,12.302", z: 14, desc: "多洛米蒂最著名的地標，環繞三座巨大的石塔。逆時針走視野最佳且較平緩。", time: "4-5 小時", trailhead: "Rifugio Auronzo", dist: "10.3 km", ascent: "430 m", descent: "430 m" },
+            { id: 2, name: "Cadini di Misurina", region: "Sexten / Cortina", cable: "無", price: "N/A", card: "N/A", diff: "容易", ll: "46.612,12.302", z: 15, desc: "通往震撼的「魔多之塔」懸崖景點，是與三尖山對望的絕佳位置。", time: "1.5-2 小時", trailhead: "Rifugio Auronzo", dist: "4.2 km", ascent: "250 m", descent: "250 m" },
+            { id: 3, name: "Seceda Ridgeline", region: "Val Gardena", cable: "Ortisei-Seceda", price: "€52-74", card: "Gardena Card / 點數", diff: "容易", ll: "46.598,11.724", z: 15, desc: "著名的刀鋒山脊景觀。搭乘纜車上山後即可輕鬆抵達最佳攝影點。", time: "2-3 小時", trailhead: "Seceda 纜車上站", dist: "5.0 km", ascent: "150 m", descent: "450 m" },
+            { id: 4, name: "Alpe di Siusi Circuit", region: "Alpe di Siusi", cable: "Alpe di Siusi", price: "€28", card: "Gardena / SS", diff: "容易", ll: "46.541,11.621", z: 14, desc: "歐洲最大的高山草甸，風景如畫，適合所有體能層級。", time: "3-4 小時", trailhead: "Compaccio", dist: "9.0 km", ascent: "200 m", descent: "200 m" },
+            { id: 5, name: "Adolf Munkel Trail", region: "Val di Funes", cable: "無", price: "N/A", card: "N/A", diff: "中等", ll: "46.637,11.758", z: 15, desc: "位於蓋斯勒山峰腳下，是近距離欣賞石灰岩牆的最佳路徑。", time: "3.5-4.5 小時", trailhead: "Zannes 停車場", dist: "9.2 km", ascent: "450 m", descent: "450 m" },
+            { id: 6, name: "Lago di Braies", region: "Braies Valley", cable: "無", price: "N/A", card: "N/A", diff: "容易", ll: "46.694,12.085", z: 15, desc: "經典環湖步道。清晨抵達可見完美山影倒映在湖面上。", time: "1.5 小時", trailhead: "Braies 湖岸", dist: "3.6 km", ascent: "50 m", descent: "50 m" },
+            { id: 7, name: "Lago di Sorapis", region: "Cortina", cable: "無", price: "N/A", card: "N/A", diff: "中等", ll: "46.556,12.203", z: 14, desc: "擁有令人難以置信的超現實粉藍色湖水，路徑稍有暴露感但有鋼索保護。", time: "4.5-5.5 小時", trailhead: "Passo Tre Croci", dist: "13.5 km", ascent: "460 m", descent: "460 m" },
+            { id: 8, name: "Cinque Torri Loop", region: "Cortina", cable: "Cinque Torri", price: "€28", card: "SuperSummer", diff: "中等", ll: "46.518,12.038", z: 15, desc: "露天戰爭博物館，可穿梭在巨大的五座石塔與戰壕之間。", time: "2-3 小時", trailhead: "Rifugio Scoiattoli", dist: "4.5 km", ascent: "200 m", descent: "200 m" },
+            { id: 9, name: "Croda da Lago", region: "Cortina", cable: "無", price: "N/A", card: "N/A", diff: "中等", ll: "46.505,12.100", z: 14, desc: "圍繞著 Federa 湖的經典環線，秋季落葉松轉黃時最美。", time: "4.5-5.5 小時", trailhead: "Ponte de Ru Curto", dist: "12.8 km", ascent: "850 m", descent: "850 m" },
+            { id: 10, name: "Tofana di Rozes Circuit", region: "Cortina", cable: "無", price: "N/A", card: "N/A", diff: "困難", ll: "46.532,12.046", z: 14, desc: "壯麗的大岩牆環線，非常具有多洛米蒂粗曠的美感。", time: "5-6 小時", trailhead: "Rifugio Dibona", dist: "13.0 km", ascent: "1100 m", descent: "1100 m" },
+            { id: 11, name: "Sassolungo Circuit", region: "Val Gardena", cable: "Forcella Sassolungo", price: "€45", card: "Gardena Card", diff: "中等", ll: "46.509,11.757", z: 14, desc: "環繞長石山的壯遊，建議搭乘特有的單人立式電梯纜車。", time: "5-6 小時", trailhead: "Passo Sella", dist: "16.5 km", ascent: "600 m", descent: "600 m" },
+            { id: 12, name: "Resciesa to Seceda", region: "Val Gardena", cable: "Resciesa / Seceda", price: "€25 + €45", card: "Gardena Card", diff: "困難", ll: "46.592,11.666", z: 14, desc: "從 Resciesa 平原一路橫越到 Seceda，能完整看完格賴納山谷的壯麗。", time: "5-6 小時", trailhead: "Resciesa 纜車站", dist: "14.5 km", ascent: "700 m", descent: "300 m" },
+            { id: 13, name: "Monte Pic", region: "Val Gardena", cable: "無", price: "N/A", card: "N/A", diff: "中等", ll: "46.568,11.733", z: 15, desc: "較少人知道的 360 度觀景點，可以同時拍到 Seceda 和 Sassolungo。", time: "3-4 小時", trailhead: "S. Cristina", dist: "7.5 km", ascent: "650 m", descent: "650 m" },
+            { id: 14, name: "Col dala Pieres", region: "Val Gardena", cable: "Col Raiser", price: "€34", card: "Gardena Card / SS", diff: "困難", ll: "46.574,11.755", z: 15, desc: "通往 Puez 高原的高級路線，視野極其開闊。", time: "6-7 小時", trailhead: "Col Raiser 纜車站", dist: "12.5 km", ascent: "850 m", descent: "850 m" },
+            { id: 15, name: "Piz Duleda", region: "Val Gardena", cable: "Col Raiser", price: "€34", card: "Gardena Card / SS", diff: "困難", ll: "46.574,11.755", z: 15, desc: "包含一段刺激的 Ferrata 確保段，是高手的首選。", time: "7-8 小時", trailhead: "Col Raiser 纜車站", dist: "14.0 km", ascent: "1050 m", descent: "1050 m" },
+            { id: 16, name: "Vallunga Valley", region: "Val Gardena", cable: "無", price: "N/A", card: "N/A", diff: "容易", ll: "46.565,11.772", z: 14, desc: "隱藏在垂直峭壁間的深長山谷，適合悠閒散步。", time: "2-3 小時", trailhead: "Selva 停車場", dist: "8.0 km", ascent: "150 m", descent: "150 m" },
+            { id: 17, name: "Gran Cir", region: "Val Gardena", cable: "無", price: "N/A", card: "N/A", diff: "中等", ll: "46.550,11.802", z: 15, desc: "最容易入手的 2500m+ 山峰，是看日出的頂級熱點。", time: "2-3 小時", trailhead: "Passo Gardena", dist: "4.5 km", ascent: "450 m", descent: "450 m" },
+            { id: 18, name: "Sass de Putia Circuit", region: "Alta Badia", cable: "無", price: "N/A", card: "N/A", diff: "中等", ll: "46.640,11.815", z: 14, desc: "環繞著孤傲的普提亞山，景觀變化豐富。", time: "4-5 小時", trailhead: "Passo delle Erbe", dist: "12.5 km", ascent: "600 m", descent: "600 m" },
+            { id: 19, name: "Armentara Meadows", region: "Alta Badia", cable: "Santa Croce", price: "€28", card: "SS / Alta Badia", diff: "容易", ll: "46.617,11.894", z: 14, desc: "春天時開滿野花的高山草原，背景是巨大的聖十字岩壁。", time: "3-4 小時", trailhead: "Sasso Croce 纜車站", dist: "9.5 km", ascent: "100 m", descent: "500 m" },
+            { id: 20, name: "Rifugio Genova Loop", region: "Val di Funes", cable: "無", price: "N/A", card: "N/A", diff: "中等", ll: "46.637,11.758", z: 15, desc: "穿越蓋斯勒山群，前往位置絕佳的熱門山屋。", time: "5-6 小時", trailhead: "Zannes 停車場", dist: "11.0 km", ascent: "650 m", descent: "650 m" },
+            { id: 21, name: "Monte Specie", region: "Val Pusteria", cable: "無", price: "N/A", card: "N/A", diff: "容易", ll: "46.643,12.210", z: 15, desc: "非常輕鬆的二戰遺址路線，能同時遠眺三尖山與紅峰。", time: "3 小時", trailhead: "Prato Piazza", dist: "6.5 km", ascent: "230 m", descent: "230 m" },
+            { id: 22, name: "Gaisl High Trail", region: "Val Pusteria", cable: "無", price: "N/A", card: "N/A", diff: "中等", ll: "46.645,12.180", z: 14, desc: "在高空平台行走，享受被三千公尺紅岩包圍的感覺。", time: "4-5 小時", trailhead: "Prato Piazza", dist: "10.0 km", ascent: "400 m", descent: "400 m" },
+            { id: 23, name: "Val Fiscalina Walk", region: "Sexten", cable: "無", price: "N/A", card: "N/A", diff: "容易", ll: "46.652,12.354", z: 13, desc: "號稱世界最美山谷之一，路徑極其平緩舒適。", time: "1.5-2 小時", trailhead: "Sexten", dist: "6.0 km", ascent: "100 m", descent: "100 m" },
+            { id: 24, name: "Torre dei Scarperi", region: "Sexten", cable: "無", price: "N/A", card: "N/A", diff: "困難", ll: "46.660,12.294", z: 13, desc: "深度探訪三尖山後方的祕境區，避開大批觀光客。", time: "6-7 小時", trailhead: "Val Fiscalina", dist: "15.0 km", ascent: "1150 m", descent: "1150 m" },
+            { id: 25, name: "Passo Giau to Mondeval", region: "Cortina", cable: "無", price: "N/A", card: "N/A", diff: "中等", ll: "46.480,12.080", z: 14, desc: "前往史前獵人遺址的平原，是觀看 Pelmo 山的最佳角度。", time: "4 小時", trailhead: "Passo Giau", dist: "10.5 km", ascent: "400 m", descent: "400 m" },
+            { id: 26, name: "Rifugio Nuvolau", region: "Cortina", cable: "Fedare / Cinque Torri", price: "€28", card: "SuperSummer", diff: "中等", ll: "46.500,12.040", z: 15, desc: "位於山尖上的百年山屋，擁有 360 度震撼視野。", time: "2-3 小時", trailhead: "Rifugio Scoiattoli", dist: "5.0 km", ascent: "300 m", descent: "300 m" },
+            { id: 27, name: "Baita Segantini", region: "S. Martino", cable: "無", price: "N/A", card: "N/A", diff: "容易", ll: "46.310,11.796", z: 15, desc: "多洛米蒂最著名的山屋倒影點，帕拉山群在此展露無遺。", time: "1.5-2 小時", trailhead: "Passo Rolle", dist: "4.0 km", ascent: "200 m", descent: "200 m" },
+            { id: 28, name: "Pala di San Martino Loop", region: "S. Martino", cable: "Rosetta", price: "€32-38", card: "SS / SMDC", diff: "困難", ll: "46.260,11.840", z: 14, desc: "在荒涼的「月球表面」月亮高原徒步，景觀極其特殊。", time: "6-8 小時", trailhead: "Rosetta 纜車站", dist: "15.0 km", ascent: "750 m", descent: "750 m" },
+            { id: 29, name: "Hans & Paula Steger", region: "Alpe di Siusi", cable: "Alpe di Siusi", price: "€28", card: "Gardena / SS", diff: "容易", ll: "46.529,11.643", z: 14, desc: "紀念多洛米蒂開拓者的步道，能看遍整個休斯高原的平緩之美。", time: "2.5 小時", trailhead: "Compaccio", dist: "7.0 km", ascent: "150 m", descent: "150 m" },
+            { id: 30, name: "Lago di Braies to Hochalpenkopf", region: "Braies", cable: "無", price: "N/A", card: "N/A", diff: "困難", ll: "46.698,12.019", z: 14, desc: "從湖邊直接攀升 1000m 俯看整個布萊依斯湖的絕景。", time: "6-7 小時", trailhead: "Braies 湖岸", dist: "12.0 km", ascent: "1050 m", descent: "1050 m" },
+            { id: 31, name: "Sass da Ciampac", region: "Alta Badia", cable: "Dantercepies", price: "€28", card: "SS / Gardena", diff: "困難", ll: "46.550,11.830", z: 14, desc: "俯瞰科爾瓦拉與聖卡西亞諾山谷的最佳制高點。", time: "4-5 小時", trailhead: "Passo Gardena", dist: "8.5 km", ascent: "650 m", descent: "650 m" },
+            { id: 32, name: "Cima Pisciadù", region: "Alta Badia", cable: "Frara / Pisciadù", price: "€28", card: "SuperSummer", diff: "困難", ll: "46.540,11.840", z: 15, desc: "包含一段熱門的鋼索步道 (Ferrata)，通往寶藍色高山湖泊。", time: "6-7 小時", trailhead: "Passo Gardena", dist: "11.5 km", ascent: "900 m", descent: "900 m" },
+            { id: 33, name: "Vajolet Towers", region: "Val di Fassa", cable: "Vajolet", price: "€28", card: "SS / Panorama Pass", diff: "困難", ll: "46.470,11.630", z: 15, desc: "玫瑰花園的核心，六座陡峭的尖塔直衝雲際。", time: "5-6 小時", trailhead: "Ciampedie 纜車站", dist: "14.5 km", ascent: "850 m", descent: "850 m" },
+            { id: 34, name: "Val Venegia to Mulaz", region: "S. Martino", cable: "無", price: "N/A", card: "N/A", diff: "困難", ll: "46.320,11.810", z: 14, desc: "在宏偉的帕拉山群北壁下行走，具有史詩般的尺度感。", time: "6-7 小時", trailhead: "Val Venegia", dist: "13.5 km", ascent: "950 m", descent: "950 m" },
+            { id: 35, name: "Rosetta to Pradidali", region: "S. Martino", cable: "Rosetta", price: "€32-38", card: "SS / SMDC", diff: "困難", ll: "46.250,11.850", z: 14, desc: "橫跨月亮高原核心，抵達風景最美的普拉迪達里山屋。", time: "6-7 小時", trailhead: "Rosetta 纜車站", dist: "12.0 km", ascent: "600 m", descent: "1100 m" },
+            { id: 36, name: "Capanna Alpina to Fanes", region: "Alta Badia", cable: "無", price: "N/A", card: "N/A", diff: "中等", ll: "46.570,12.000", z: 14, desc: "進入多洛米蒂傳說中的 Fanes 國度，高山地貌奇特。", time: "5-6 小時", trailhead: "Capanna Alpina", dist: "14.0 km", ascent: "750 m", descent: "750 m" },
+            { id: 37, name: "Cima della Vezzana", region: "S. Martino", cable: "Rosetta", price: "€32-38", card: "SuperSummer", diff: "困難", ll: "46.300,11.820", z: 15, desc: "帕拉山群最高峰，視野可遠達威尼斯海岸。", time: "8-9 小時", trailhead: "Rosetta 纜車站", dist: "16.0 km", ascent: "1250 m", descent: "1250 m" },
+            { id: 38, name: "Tullen Summit", region: "Val di Funes", cable: "無", price: "N/A", card: "N/A", diff: "困難", ll: "46.630,11.770", z: 15, desc: "蓋斯勒山群最東端的制高點，俯看富內斯山谷的首選。", time: "5-6 小時", trailhead: "Zannes 停車場", dist: "10.0 km", ascent: "950 m", descent: "950 m" },
+            { id: 39, name: "Rifugio Bolzano Loop", region: "Alpe di Siusi", cable: "Alpe di Siusi", price: "€28", card: "Gardena / SS", diff: "困難", ll: "46.510,11.600", z: 14, desc: "攀登休斯高原上最顯眼的「城堡」山屋。", time: "7-8 小時", trailhead: "Compaccio", dist: "18.5 km", ascent: "1000 m", descent: "1000 m" },
+            { id: 40, name: "Santa Maddalena Trail", region: "Val di Funes", cable: "無", price: "N/A", card: "N/A", diff: "容易", ll: "46.643,11.795", z: 15, desc: "經典的明信片路線，走過著名的聖瑪德蓮娜教堂拍照位。", time: "1.5-2 小時", trailhead: "Santa Maddalena 鎮", dist: "5.5 km", ascent: "250 m", descent: "250 m" }
         ];
 
         let currentActiveId = null;
@@ -378,6 +419,13 @@
             // Populate Modal Content
             document.getElementById('modalTitle').innerText = hike.name;
             document.getElementById('modalRegion').innerHTML = `<i data-lucide="map-pin" class="w-4 h-4"></i> ${hike.region}`;
+            document.getElementById('modalDesc').innerText = hike.desc;
+            document.getElementById('modalTime').innerText = hike.time;
+            document.getElementById('modalDist').innerText = hike.dist;
+            document.getElementById('modalAscent').innerText = `+ ${hike.ascent}`;
+            document.getElementById('modalDescent').innerText = `- ${hike.descent}`;
+            document.getElementById('modalTrailhead').innerText = hike.trailhead;
+            
             document.getElementById('modalCable').innerText = hike.cable;
             document.getElementById('modalPrice').innerText = hike.price !== 'N/A' ? hike.price : '免費 / N/A';
             document.getElementById('modalCard').innerText = hike.card !== 'N/A' ? hike.card : '不適用';
