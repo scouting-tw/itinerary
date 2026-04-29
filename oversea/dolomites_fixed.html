@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多洛米蒂山脈 14 天深度行程規劃</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        /* Custom font and base styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+
+        .header {
+            background-image: url('https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/76/2d/32/caption.jpg?w=1200&h=-1&s=1');
+            background-size: cover;
+            background-position: center 0%;
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            margin: 0;
+            text-shadow: 2px 2px 4px #000;
+        }
+
+        .header p.subtitle {
+            font-size: 1.1em;
+            text-shadow: 1px 1px 2px #000;
+            margin-top: 10px;
+        }
+
+        .list-circle li::marker {
+            content: '• ';
+            color: #ef4444;
+        }
+
+        .map-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .map-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 音樂播放器隱藏容器 */
+        #yt-player-container {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            width: 1px;
+            height: 1px;
+            opacity: 0.01;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* 播放按鈕動畫 */
+        .music-wave {
+            display: inline-flex;
+            align-items: center;
+            height: 20px;
+        }
+
+        .bar {
+            width: 3px;
+            height: 10px;
+            background: #1d4ed8;
+            margin: 0 1px;
+            animation: sound 0ms -800ms linear infinite alternate;
+            transition: height 0.8s;
+        }
+
+        .playing .bar {
+            animation-duration: 400ms;
+        }
+
+        @keyframes sound {
+            0% {
+                height: 3px;
+                opacity: .35;
+            }
+
+            100% {
+                height: 15px;
+                opacity: 0.95;
+            }
+        }
+
+        /* ================= 全螢幕遮罩層樣式 ================= */
+        #fs-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: black;
+            z-index: 9999;
+        }
+
+        #fs-overlay iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        #fs-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10001;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            padding: 8px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+            font-weight: bold;
+        }
+
+        /* 電腦版隱藏關閉按鈕，因可用 Esc */
+        @media (min-width: 1024px) {
+            #fs-close-btn {
+                display: none !important;
+            }
+        }
+
+        /* 底部提示文字 (覆蓋控制列) */
+        #fs-hint {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 10000;
+            color: rgba(255, 255, 255, 0.8);
+            background-color: rgba(0, 0, 0, 0.85);
+            padding: 12px 0;
+            font-size: 14px;
+            text-align: center;
+            pointer-events: none;
+            /* 讓點擊穿透 */
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+
+<body class="text-gray-800">
+
+    <header class="header" id="top-header">
+        <h1>多洛米蒂山脈深度之旅</h1>
+        <p class="subtitle">14 天精選行程，探索義大利的自然瑰寶</p>
+        <div style="text-align:center; padding-top:30px;">
+            <a href="https://forms.gle/5wRvwvHMA8E3E5jt8"
+                class="bg-yellow-400 text-gray-900 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-yellow-500 transition-colors duration-300">
+                立即報名
+            </a>
+        </div>
+    </header>
+
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-100">
+        <div
+            class="container mx-auto px-4 py-3 flex justify-between items-center text-sm font-bold text-blue-900 overflow-x-auto whitespace-nowrap gap-6 no-scrollbar">
+            <a href="#day1" class="hover:text-blue-600 transition-colors">D1</a>
+            <a href="#day2" class="hover:text-blue-600 transition-colors">D2</a>
+            <a href="#day3" class="hover:text-blue-600 transition-colors">D3</a>
+            <a href="#day4" class="hover:text-blue-600 transition-colors">D4</a>
+            <a href="#day5" class="hover:text-blue-600 transition-colors">D5</a>
+            <a href="#day6" class="hover:text-blue-600 transition-colors">D6</a>
+            <a href="#day7" class="hover:text-blue-600 transition-colors">D7</a>
+            <a href="#day8" class="hover:text-blue-600 transition-colors">D8</a>
+            <a href="#day9" class="hover:text-blue-600 transition-colors">D9</a>
+            <a href="#day10" class="hover:text-blue-600 transition-colors">D10</a>
+            <a href="#day11" class="hover:text-blue-600 transition-colors">D11</a>
+            <a href="#day12" class="hover:text-blue-600 transition-colors">D12</a>
+            <a href="#day13" class="hover:text-blue-600 transition-colors">D13</a>
+            <a href="#day14" class="hover:text-blue-600 transition-colors">D14</a>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-8">
+
+        <section id="prep" class="mb-12">
+            <h2 class="text-3xl font-extrabold text-blue-700 mb-6 border-b-2 pb-2">🚗 自駕與徒步行前準備</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+                <div class="bg-blue-50 p-5 rounded-lg border border-blue-200">
+                    <h3 class="font-bold text-blue-800 mb-2 text-lg">⚠️ 義大利自駕必讀</h3>
+                    <ul class="space-y-2 text-gray-700">
+                        <li><b>國際駕照：</b>必須準備「國際駕照」與「台灣合法駕照正本」。</li>
+                        <li><b>ZTL 避坑：</b>義大利小鎮（如 Cortina, Ortisei）中心多有 ZTL (限入區)，誤闖罰單約 €100 起跳。請務必確認飯店是否在 ZTL 內並提供報備。
+                        </li>
+                        <li><b>租車檢查：</b>多洛米蒂山路崎嶇，建議租用動力充足的 SUV，並在取車時錄影存證外觀與內裝狀況。</li>
+                    </ul>
+                </div>
+                <div class="bg-emerald-50 p-5 rounded-lg border border-emerald-200 col-span-1 md:col-span-2">
+                    <h3 class="font-bold text-emerald-800 mb-4 text-lg flex items-center">
+                        <span class="mr-2">🚠</span> Dolomiti SuperSummer Card 2026 攻略
+                    </h3>
+                    <p class="text-sm text-gray-700 mb-4">這是多洛米蒂夏季最重要的通行證，可搭乘區域內超過 140 條纜車線。8 歲以下兒童免費，青少年有額外折扣。</p>
+                    
+                    <div class="overflow-x-auto mb-6">
+                        <table class="min-w-full text-xs text-left text-gray-700 border-collapse">
+                            <thead class="bg-emerald-100 text-emerald-900">
+                                <tr>
+                                    <th class="px-3 py-2 border">種類</th>
+                                    <th class="px-3 py-2 border">成人價格 (2026)</th>
+                                    <th class="px-3 py-2 border">特點</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="px-3 py-2 border font-bold">一日券 (1 Day)</td>
+                                    <td class="px-3 py-2 border">€ 67</td>
+                                    <td class="px-3 py-2 border">當日無限搭乘，適合「纜車大滿貫」日。</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-3 py-2 border font-bold">3 / 4 天多日券</td>
+                                    <td class="px-3 py-2 border">€ 145</td>
+                                    <td class="px-3 py-2 border">4 天內任選 3 天使用，彈性極高。</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-3 py-2 border font-bold">5 / 7 天多日券</td>
+                                    <td class="px-3 py-2 border">€ 185</td>
+                                    <td class="px-3 py-2 border">7 天內任選 5 天使用，適合深度玩家。</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-3 py-2 border font-bold">點數卡 (Points)</td>
+                                    <td class="px-3 py-2 border">1000 點 / € 100</td>
+                                    <td class="px-3 py-2 border"><b>可多人共用</b>，扣完為止，適合搭乘次數少者或 D8 特殊點位。</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-red-50 p-4 rounded border border-red-100 text-xs text-red-800">
+                            <h4 class="font-bold mb-1">⚠️ 2026 重要限制</h4>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li><b>Seceda 禁令：</b>奧蒂塞伊 (Ortisei) 前往 Seceda 的兩段纜車<b>不接受</b>一日券或多日券，僅能使用「點數卡」或「現場買票」。</li>
+                                <li><b>三尖山預約：</b>Rifugio Auronzo 景觀公路已改為<b>全面線上預約</b> (€ 40)，請至 <a href="https://pass.auronzo.info" class="underline font-bold" target="_blank">pass.auronzo.info</a> 搶訂。</li>
+                                <li><b>布萊依斯湖預約：</b>夏季管制時段 (09:30-16:00) 需預約車位或接駁車票，請至 <a href="https://www.prags.bz/en/tickets" class="underline font-bold" target="_blank">prags.bz/tickets</a> 預訂。</li>
+                                <li><b>購買管道：</b>推薦線上官網 <a href="https://www.dolomitisuperski.com/" class="underline" target="_blank">My Dolomiti Shop</a> 預購，或在 Cortina 鎮中心及各大纜車站底部售票處購買。</li>
+                            </ul>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded border border-blue-100 text-xs text-blue-800">
+                            <h4 class="font-bold mb-1">💡 14 天行程最佳化建議</h4>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li><b>主力卡片：</b>建議購買 <b>5 out of 7 天券</b>，用於 D6, D7, D9, D10, D13 這五個高單價/高頻率纜車日。</li>
+                                <li><b>彈性組合：</b>其餘零星日子（如 D2, D3, D5）及 D8 Seceda，建議全團搭配一張或多張<b>點數卡 (1000點)</b> 共享。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <section class="mb-12 bg-white p-8 rounded-xl shadow-md">
+            <h2 class="text-3xl font-bold text-blue-700 mb-4">歡迎來到多洛米蒂</h2>
+            <p class="text-lg leading-relaxed">
+                多洛米蒂山脈 (Dolomites) 位於義大利東北部，是聯合國教科文組織世界遺產，以其獨特的鋸齒狀山峰、翠綠的山谷和清澈的湖泊而聞名。這裡不僅是登山客的天堂，也是攝影愛好者和自然愛好者的夢幻之地。這份 14
+                天的深度行程規劃，將帶您充分體驗多洛米蒂的壯麗與魅力。
+            </p>
+            <div class="map-container mb-8">
+                <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1Syu0sS-wATn3VPujeOgCAQJavHpQ7OE&ehbc=2E312F"
+                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+
+            <p class="text-center text-gray-500 text-sm">
+                <a href="https://maps.app.goo.gl/SR5swxZMnzrdLuTA7" target="_blank">多洛米蒂地圖</a>
+            </p>
+        </section>
+
+        <section class="mb-12 bg-white p-8 rounded-xl shadow-md">
+            <h2 class="text-3xl font-bold text-blue-700 mb-6">住宿點選擇</h2>
+            <p class="text-lg mb-6 leading-relaxed">
+                為了最大化探索效率並減少頻繁更換住宿的麻煩，主要的住宿點：
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-green-50 p-6 rounded-lg shadow-inner">
+                    <h3 class="text-2xl font-semibold text-green-800 mb-3">聖盧加諾 (San Lugano) 附近小鎮</h3>
+                    <p class="text-base mb-2"><b>優勢：</b> 位於多洛米蒂西南部，是連接 Adige 谷地與 Val di Fiemme 的戰略隘口。這裡距離<b>卡雷扎湖 (Lago
+                            di Carezza)</b> 與<b>玫瑰花園</b>極近。雖然前往奧蒂塞伊（塞切達山/休斯高原）需約 50-60 分鐘車程，但此區住宿更為寧靜，是極佳的西側基地。</p>
+                    <div class="mt-4 flex justify-center">
+                        <img src="https://image.jimcdn.com/app/cms/image/transf/dimension=682x2048:format=jpg/path/sbba1b6916cdd0516/image/i83870bdf054095f2/version/1701980242/image.jpg"
+                            alt="聖盧加諾與費梅谷周邊景色" class="rounded-lg shadow-lg w-full md:w-3/4 lg:w-2/3">
+                    </div>
+                </div>
+                <div class="bg-blue-50 p-6 rounded-lg shadow-inner">
+                    <h3 class="text-2xl font-semibold text-blue-800 mb-3">科爾蒂納丹佩佐 (Cortina d'Ampezzo) 附近小鎮</h3>
+                    <p class="text-base mb-2"><b>優勢：</b> 位於多洛米蒂東部，是前往三尖山 (Tre Cime)、賈烏山口、五塔 (Cinque Torri)、馬爾莫拉達山
+                        (Marmolada)、布萊依斯湖 (Lago di Braies) 和索拉皮斯湖 (Lago di Sorapis) 的絕佳基地。科爾蒂納本身也是一個熱鬧且設施完善的山城。</p>
+                    <div class="mt-4 flex justify-center">
+                        <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/611187689.jpg?k=d98d2f76976d68a6d7379790a3816d70f1c954ad7980c1801d2cca5abe5047d4&o="
+                            alt="科爾蒂納丹佩佐小鎮" class="rounded-lg shadow-lg w-full md:w-3/4 lg:w-2/3">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-blue-700 mb-6 text-center">行程規劃</h2>
+
+            <div id="day1" class="bg-white p-6 rounded-xl shadow-md mb-6" data-video-id="dQw4w9WgXcQ" data-day-name="多洛米蒂 導覽"
+                data-slide-url="https://docs.google.com/presentation/d/e/2PACX-1vSmBc7bTK8xQU9c58dwAMvxROVJwy4JNhXb0PdsUO17LRkySl_4Nt1wwA2Hh66tANweGOPNTOtKnk8D/pubembed?start=false&loop=false&delayms=3000">
+                <h4 class="text-xl font-semibold text-gray-800 mb-3">第 1 天：米蘭 ➔ 加爾達湖 ➔ 補給 ➔ 科爾蒂納</h4>
+                <div class="space-y-6 text-gray-700">
+                    <p>這是一條非常順路且充實的路線，總車程約 4.5 至 5 小時 (不含停留)。</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-blue-50 p-5 rounded-xl border border-blue-100">
+                            <h5 class="font-bold text-blue-900 mb-2 flex items-center">🏰 第一站：加爾達湖區</h5>
+                            <p class="text-sm leading-relaxed">
+                                <b>西爾苗內 (Sirmione)</b> 有水上古堡；<b>馬爾切西內 (Malcesine)</b> 則可搭纜車上山俯瞰湖景。建議在此享用午餐。
+                            </p>
+                        </div>
+                        <div class="bg-orange-50 p-5 rounded-xl border border-orange-100">
+                            <h5 class="font-bold text-orange-900 mb-2 flex items-center">🛒 第二站：IperTosano Vago 採買</h5>
+                            <p class="text-sm leading-relaxed mb-2">
+                                義大利東北部知名的量販超市，價格極具競爭力。適合在此採購飲水與乾糧。
+                            </p>
+                            <p class="text-xs text-gray-500 italic">Via della Scienza, 2/5, Vago (至 20:30)</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 p-5 rounded-xl border border-gray-200">
+                        <h5 class="font-bold text-gray-800 mb-3 text-sm flex items-center">⏰ 行程時間預估</h5>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
+                            <div class="flex justify-between border-b pb-1"><span>09:00</span> <span class="text-gray-600">米蘭出發</span></div>
+                            <div class="flex justify-between border-b pb-1"><span>10:30-13:00</span> <span class="text-gray-600">湖區遊覽與午餐</span></div>
+                            <div class="flex justify-between border-b pb-1"><span>13:45-15:00</span> <span class="text-gray-600">Tosano 大採買</span></div>
+                            <div class="flex justify-between border-b pb-1"><span>15:00-18:00</span> <span class="text-gray-600">前往 Cortina</span></div>
+                        </div>
+                    </div>
+
+                    <ul class="list-disc list-inside space-y-2 text-sm">
+                        <li><b>路線：</b>Vago 出發經 A22 往北，轉 SS49 經 Dobbiaco 南下。</li>
+                        <li><b>風景：</b>進入 Pusteria 山谷後，多洛米蒂的奇岩景觀將漸入佳境。</li>
+                        <li><b>住宿：</b>科爾蒂納丹佩佐 (Cortina d'Ampezzo) 附近。</li>
+                    </ul>
+                </div>
+                <div class="mt-4 flex justify-center">
+                    <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/229902259.jpg?k=ddf95d455fc00a05ad03950bc995a920395d0afddf538ed70826929fb403b074&o="
+                        alt="科爾蒂納丹佩佐小鎮" class="rounded-lg shadow-lg w-full md:w-3/4 lg:w-2/3">
+                </div>
+            </div>
+
+            <div id="day2" class="bg-white p-6 rounded-xl shadow-md mb-6" data-video-id="hYAn5S6QDSc" data-day-name="三尖山 導覽"
+                data-slide-url="https://www.canva.com/design/DAG9XejG5qk/XV80LcldgRM5sbCSatP88g/view?embed">
+                <h4 class="text-xl font-semibold text-gray-800 mb-3">第 2 天：多洛米蒂的象徵 - 三尖山 (Tre Cime di Lavaredo) 經典環形徒步</h4>
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="flex-1 text-sm text-gray-700">
+                        <div class="bg-red-50 p-5 rounded-lg border border-red-200 mb-6">
+                            <h5 class="font-bold text-red-800 mb-3 text-base flex items-center">
+                                <span class="mr-2">⚠️</span> 2026 全面預約制 (重要更新)
+                            </h5>
+                            <p class="mb-3">從 2025 年起，通往 Rifugio Auronzo 的景觀公路已由「排隊制」改為<b>「全面線上預約」</b>。未經預約，山下入口閘門將不會開啟。</p>
+                            <ul class="list-disc list-inside space-y-1 ml-2">
+                                <li><b>預約網站：</b> <a href="https://pass.auronzo.info" class="text-blue-600 underline font-bold" target="_blank">pass.auronzo.info</a> (建議提前 30 天搶訂)。</li>
+                                <li><b>通行套票：</b> 普通轎車 <b>€ 40 / 12 小時</b> (含通行權與停車位)。</li>
+                                <li><b>租車族提示：</b> 預約時車牌可先留空或填預計車牌，取車後再登入更新即可。</li>
+                            </ul>
+                        </div>
+
+                        <h5 class="font-bold text-blue-800 mb-3 text-lg">🥾 經典環形徒步 (Tre Cime Loop)</h5>
+                        <p class="mb-4 text-gray-600 italic">全程約 10 公里 | 耗時 3.5 - 5 小時 | 建議**逆時針**行走</p>
+                        
+                        <ol class="space-y-4">
+                            <li>
+                                <b class="text-gray-900">1. Rifugio Auronzo ➔ Rifugio Lavaredo (101 步道)</b>
+                                <p class="ml-4">平坦寬敞的熱身段。途中會經過小教堂 (Cappella degli Alpini)，可捕捉三尖山側影。</p>
+                            </li>
+                            <li>
+                                <b class="text-gray-900">2. Rifugio Lavaredo ➔ Forcella Lavaredo (埡口)</b>
+                                <p class="ml-4">由山屋後方爬升，抵達埡口時，將首次迎面震撼的三尖山正面景觀。</p>
+                            </li>
+                            <li>
+                                <b class="text-gray-900">3. Forcella Lavaredo ➔ Rifugio Locatelli (101 步道)</b>
+             <div id="day3" class="bg-white p-6 rounded-xl shadow-md mb-6" data-video-id="qJPDpr8kiig" data-day-name="布萊依斯湖 導覽"
+                data-slide-url="https://www.canva.com/design/DAG9niNx1mA/fn-ZpBJvAtHJi98EuCHFHw/view?embed">
+                <h4 class="text-xl font-semibold text-gray-800 mb-3">第 3 天：多洛米蒂的珍珠 - 布萊依斯湖 (Lago di Braies)</h4>
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="flex-1 text-sm text-gray-700">
+                        <div class="bg-red-50 p-5 rounded-lg border border-red-200 mb-6">
+                            <h5 class="font-bold text-red-800 mb-3 text-base flex items-center">
+                                <span class="mr-2">⚠️</span> 2026 交通管制 (預約制)
+                            </h5>
+                            <p class="mb-3">夏季 (約 7/10 - 9/10) 每日 <b>09:30 – 16:00</b> 道路封閉，僅限有預約車位或接駁巴士票者進入。</p>
+                            <ul class="list-disc list-inside space-y-1 ml-2">
+                                <li><b>預約網站：</b> <a href="https://www.prags.bz/en/tickets" class="text-blue-600 underline font-bold" target="_blank">prags.bz/tickets</a> (建議提前 15-30 天)。</li>
+                                <li><b>停車套票：</b> 約 <b>€ 20-40</b>。首選 <b>P4 (湖邊 2 分鐘)</b>，次選 P3 (步行 15 分鐘)。</li>
+                                <li><b>省錢密技：</b> 只要在 <b>09:30 之前</b> 抵達並停在免預約車位，即可避開道路封閉限制。</li>
+                            </ul>
+                        </div>
+
+                        <h5 class="font-bold text-blue-800 mb-3 text-lg">📸 深度行程規劃</h5>
+                        <ul class="space-y-4">
+                            <li>
+                                <b class="text-gray-900">07:30 - 08:30 | 晨間攝影與倒影</b>
+                                <p class="ml-4 text-gray-600">趁早抵達捕捉 Seekofel 山在翡翠綠湖面的完美倒影。<b>木棧道木屋 (La Palafitta)</b> 是經典拍照點。</p>
+                            </li>
+                            <li>
+                                <b class="text-gray-900">08:30 - 10:00 | 1 號環湖步道 (Loop Hike)</b>
+                                <p class="ml-4 text-gray-600">耗時約 1.5 小時，建議順時針行走。路徑平緩，能從多個角度欣賞湖水顏色變化。</p>
+                            </li>
+                            <li>
+                                <b class="text-gray-900">10:00 - 11:30 | 經典划船體驗 (Rowing Boat)</b>
+                                <p class="ml-4 text-gray-600">費用預計 <b>€ 35-50 / 小時</b>。從湖中心望向山脈的視角是多洛米蒂最具代表性的體驗。</p>
+                            </li>
+                            <li>
+                                <b class="text-gray-900">11:30 - 12:30 | 湖畔午餐時光</b>
+                                <p class="ml-4 text-gray-600">可在湖邊長椅野餐（享用 Tosano 採買的食材），或在 Hotel Lago di Braies 餐廳用餐。</p>
+                            </li>
+                        </ul>
+
+                        <div class="mt-6 bg-emerald-50 p-4 rounded-lg border border-emerald-100">
+                            <h5 class="font-bold text-emerald-800 mb-2">🚠 下午轉場建議 (SuperSummer Card)</h5>
+                            <p class="text-gray-600">離開湖區後，前往附近的 San Candido 搭乘 <b>Seggiovia Monte Baranci (Haunold)</b> 吊椅。這裡有著名的 <b>Fun Bob (旱地雪橇)</b>，纜車票包含在卡內，雪橇需另付費。</p>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-1/3 lg:w-5/12">
+                        <div class="sticky top-24">
+                            <div class="rounded-xl overflow-hidden shadow-inner border border-gray-100">
+                                <iframe
+                                    src="https://www.google.com/maps/d/embed?mid=1hjRNV3U-0WMvGXfjioNufiDp1iucpHY&ehbc=2E312F"
+                                    width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy">
+                                </iframe>
+                            </div>
+                            <div class="mt-4 bg-yellow-50 p-4 rounded-lg border border-yellow-200 text-xs text-gray-700">
+                                <h6 class="font-bold mb-2">💡 必備注意事項</h6>
+                                <ul class="space-y-1">
+                                    <li>• <b>禁飛區：</b>湖區<b>嚴格禁止空拍機 (Drones)</b>，違者重罰。</li>
+                                    <li>• <b>穿搭：</b>清晨溫差大 (5-10度)，必備<b>薄羽絨或防風外套</b>。</li>
+                                    <li>• <b>鞋子：</b>環湖路面多碎石，穿著<b>輕量登山鞋</b>或運動鞋較舒適。</li>
+                                    <li>• <b>寵物：</b>允許帶狗但須繫繩，搭接駁車須戴口罩。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 text-sm text-gray-500 border-t pt-4 italic">
+                    📍 住宿：科爾蒂納丹佩佐附近。
+                </div>
+            </div>
+
+
+            <div id="day4" class="bg-white p-6 rounded-xl shadow-md mb-6" data-video-id="DR_zcCLihAU" data-day-name="馬爾莫拉達山 導覽"
+                data-slide-url="https://www.canva.com/design/DAG9nmj_91w/9ZlxWNUR3MXCkG34B-256w/view?embed">
+                <h4 class="text-xl font-semibold text-gray-800 mb-3">第 4 天：多洛米蒂女王 - 馬爾莫拉達山 (Marmolada) 巔峰體驗</h4>
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="flex-1 text-sm text-gray-700">
+                        <div class="bg-blue-50 p-5 rounded-lg border border-blue-200 mb-6">
+                            <h5 class="font-bold text-blue-800 mb-3 text-base flex items-center">
+                                <span class="mr-2">🚠</span> 2026 纜車資訊與建議
+                            </h5>
+                            <ul class="list-disc list-inside space-y-1 ml-2">
+                                <li><b>主纜車：</b> Malga Ciapela ➔ Punta Rocca (三段式)。</li>
+                                <li><b>2026 票價：</b> 成人來回 <b>€ 40</b> (6歲以下免費)。</li>
+                                <li><b>SuperSummer Card：</b> <span class="text-red-600 font-bold">不包含</span>此纜車，需現場買票。</li>
+                                <li><span class="text-orange-600 font-bold">⚠️ 重要更新：</span> 舊有的 Pian dei Fiacconi 單人吊椅已永久關閉，請勿前往。</li>
+                            </ul>
+                        </div>
+
+                        <h5 class="font-bold text-blue-800 mb-3 text-lg">🏔️ 巔峰行程規劃</h5>
+                        <ul class="space-y-4">
+                            <li>
+                                <b class="text-gray-900">09:00 - 10:30 | 登頂 3265m 的震撼</b>
+                                <p class="ml-4 text-gray-600">從 Malga Ciapela 搭乘三段纜車直達 <b>Punta Rocca</b>。在 360 度觀景台俯瞰多洛米蒂群峰，甚至能看到威尼斯（天氣極好時）。</p>
+                            </li>
+                            <li>
+                                <b class="text-gray-900">10:30 - 12:00 | 塞勞塔 (Serauta) 一戰博物館</b>
+                                <p class="ml-4 text-gray-600">在第二段纜車站下車，參觀歐洲最高的一戰博物館。走進岩石鑿出的戰壕，感受當年的「冰城」戰爭歷史。</p>
+                            </li>
+                            <li>
+                                <b class="text-gray-900">12:00 - 13:30 | 高山景觀午餐</b>
+                                <p class="ml-4 text-gray-600">在 Serauta 餐廳享用午餐，一邊用餐一邊透過落地窗平視冰川與奇岩。</p>
+                            </li>
+                            <li>
+                                <b class="text-gray-900">13:30 - 15:30 | 費達亞湖 (Lago di Fedaia) 漫步</b>
+                                <p class="ml-4 text-gray-600">下山後駕車前往附近的費達亞湖，沿著大壩漫步，拍攝馬爾莫拉達冰川在湖水中的壯麗倒影。</p>
+                            </li>
+                        </ul>
+
+                        <div class="mt-6 bg-emerald-50 p-4 rounded-lg border border-emerald-100">
+                            <h5 class="font-bold text-emerald-800 mb-2">💡 專家攝影策略</h5>
+                            <p class="text-gray-600">若持有 SuperSummer Card，下午推薦前往 <b>Arabba</b> 搭乘 <b>Porta Vescovo</b> 纜車。這裡能「隔著山谷」正對馬爾莫拉達冰川，是拍攝冰川全景的最佳上帝視角。</p>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-1/3 lg:w-5/12">
+                        <div class="sticky top-24">
+                            <div class="rounded-xl overflow-hidden shadow-inner border border-gray-100">
+                                <iframe
+                                    src="https://www.google.com/maps/d/embed?mid=1SwXXmz5_CsyGxnQSMRHXyq6l-heY720&ehbc=2E312F"
+                                    width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy">
+                                </iframe>
+                            </div>
+                            <div class="mt-4 bg-yellow-50 p-4 rounded-lg border border-yellow-200 text-xs text-gray-700">
+                                <h6 class="font-bold mb-2">⚠️ 必備注意事項</h6>
+                                <ul class="space-y-1">
+                                    <li>• <b>保暖：</b> 頂端海拔 3265m，夏季氣溫亦可能接近 0 度，必備<b>羽絨衣與防風帽</b>。</li>
+                                    <li>• <b>防護：</b> 冰川反射極強，務必配戴<b>太陽眼鏡</b>與防曬乳。</li>
+                                    <li>• <b>高山症：</b> 若感到頭暈請緩慢行動，並多補充水分。</li>
+                                    <li>• <b>交通：</b> 若要回 Passo Fedaia 取車，可搭乘滑雪季/夏季接駁巴士。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 text-sm text-gray-500 border-t pt-4 italic">
+                    📍 住宿：科爾蒂納丹佩佐附近。
+                </div>
+            </div>
+
+
+            <div id="day5" class="bg-white p-6 rounded-xl shadow-md mb-6" data-video-id="3oEhYfWb9ZU" data-day-name="索拉皮斯湖 導覽"
+                data-slide-url="https://www.canva.com/design/DAG9ni9Dk7U/7oBVG23A6c4abh5do8dTOQ/view?embed">
+                <h4 class="text-xl font-semibold text-gray-800 mb-3">第 5 天：夢幻牛奶藍 - 索拉皮斯湖 (Lago di Sorapis) 徒步</h4>
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="flex-1 text-sm text-gray-700">
+                        <div class="bg-red-50 p-5 rounded-lg border border-red-200 mb-6">
+                            <h5 class="font-bold text-red-800 mb-3 text-base flex items-center">
+                                <span class="mr-2">⚠️</span> 停車與人流警告
+                            </h5>
+                            <p class="mb-3">索拉皮斯湖是多洛米蒂最擁擠的景點。雖然目前<b>無需預約</b>，但車位極度短缺。</p>
+                            <ul class="list-disc list-inside space-y-1 ml-2">
+                                <li><b>抵達時間：</b> 強烈建議在 <b>08:00 之前</b> 抵達 Passo Tre Croci。</li>
+                                <li><b>替代交通：</b> 若不想開車，可從 Cortina 搭乘 <b>Bus 30/31</b> 抵達，省去停車煩惱。</li>
+                                <li><b>步道特色：</b> 215 步道部分段落狹窄且有懸崖感（有鐵鍊），懼高者請留意。</li>
+                            </ul>
+                        </div>
+
+                        <h5 class="font-bold text-blue-800 mb-3 text-lg">🥾 徒步與探索規劃</h5>
+                        <ul class="space-y-4">
+                            <li>
+                                <b class="text-gray-900">08:00 - 10:30 | 挑戰 215 步道</b>
+                                <p class="ml-4 text-gray-600">單程約 5.5 公里，需時 2-2.5 小時。穿越森林與岩石路段，享受前往牛奶藍湖泊的過程。</p>
+                            </li>
+                            <li>
+                                <b class="text-gray-900">10:30 - 12:30 | 牛奶藍湖畔時光</b>
+                                <p class="ml-4 text-gray-600">索拉皮斯湖因冰川懸浮微粒呈現獨特的「牛奶藍」。可在湖邊享用行動糧食，或前往 Rifugio Vandelli 山屋休息。</p>
+                            </li>
+                            <li>
+                                <b class="text-gray-900">12:30 - 15:00 | 下山回程</b>
+                                <p class="ml-4 text-gray-600">原路折返，注意下午上山的人潮可能導致步道堵塞，請耐心禮讓。</p>
+                            </li>
+                            <li>
+                                <b class="text-gray-900">15:30 - 17:30 | 密蘇里納湖 (Misurina) 的寧靜</b>
+                                <p class="ml-4 text-gray-600">驅車前往附近的密蘇里納湖。在湖邊散步或喝杯下午茶，看著 Sorapis 山脈在水中的倒影，洗去徒步的疲勞。</p>
+                            </li>
+                        </ul>
+                    </di            <div id="day7" class="bg-white p-6 rounded-xl shadow-md mb-6" data-video-id="7Kz79l-aNXI" data-day-name="塞拉山口 導覽"
+                data-slide-url="https://www.canva.com/design/DAG9n63Te1E/eZzzgcCULTqSiTTifmuAmw/view?embed">
+                <h4 class="text-xl font-semibold text-gray-800 mb-3">第 7 天：多洛米蒂核心巡禮 - 塞拉山口 (Passo Sella) 與 波多伊山口 (Passo Pordoi)</h4>
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="flex-1 text-sm text-gray-700">
+                        <div class="bg-emerald-50 p-5 rounded-lg border border-emerald-200 mb-6">
+                            <h5 class="font-bold text-emerald-800 mb-3 text-base flex items-center">
+                                <span class="mr-2">🚠</span> 雙山口纜車連發 (SuperSummer Card 必刷)
+                            </h5>
+                            <ul class="list-disc list-inside space-y-1 ml-2">
+                                <li><b>第一站：</b> Forcella Sassolungo (棺材纜車) - 體驗跑步上車的樂趣。</li>
+                                <li><b>第二站：</b> Funivia Sass Pordoi - 直達 2950m「多洛米蒂露台」。</li>
+                                <li><b>推薦路線：</b> 從 Cortina 出發，經由三個隘口抵達 San Lugano，全程皆景。</li>
+                            </ul>
+                        </div>
+
+                        <h5 class="font-bold text-blue-800 mb-3 text-lg">📸 行程規劃與亮點</h5>
+                        <ul class="space-y-4">
+                            <li>
+                                <b class="text-gray-900">08:00 - 10:30 | 挑戰 215 步道</b>
+                                <p class="ml-4 text-gray-600">單程約 5.5 公里，需時 2-2.5 小時。穿越森林與岩石路段，享受前往牛奶藍湖泊的過程。</p>
+                            </li>
+                            <li>
+                                <b class="text-gray-900">10:30 - 12:30 | 牛奶藍湖畔時光</b>
+                                <p class="ml-4 text-gray-600">索拉皮斯湖因冰川懸浮微粒呈現獨特的「牛奶藍」。可在湖邊享用行動糧食，或前往 Rifugio Vandelli 山屋休息。</p>
+                            </li>
+                            <li>
+                                <b class="text-gray-900">12:30 - 15:00 | 下山回程</b>
+                                <p class="ml-4 text-gray-600">原路折返，注意下午上山的人潮可能導致步道堵塞，請耐心禮讓。</p>
+                            </li>
+                            <li>
+                                <b class="text-gray-900">15:30 - 17:30 | 密蘇里納湖 (Misurina) 的寧靜</b>
+                                <p class="ml-4 text-gray-600">驅車前往附近的密蘇里納湖。在湖邊散步或喝杯下午茶，看著 Sorapis 山脈在水中的倒影，洗去徒步的疲勞。</p>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="w-full md:w-1/3 lg:w-5/12">
+                        <div class="sticky top-24">
+                            <div class="rounded-xl overflow-hidden shadow-inner border border-gray-100">
+                                <iframe
+                                    src="https://www.google.com/maps/d/embed?mid=1kBiglBlVOsVOhqLgLFAl-rr7nruobks&ehbc=2E312F"
+                                    width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy">
+                                </iframe>
+                            </div>
+                            <div class="mt-4 bg-emerald-50 p-4 rounded-lg border border-emerald-100 text-xs text-gray-700">
+                                <h6 class="font-bold mb-2">📸 攝影與穿搭提示</h6>
+                                <ul class="space-y-1">
+                                    <li>• <b>禁飛：</b> 索拉皮斯湖<b>嚴格禁止空拍機</b>。</li>
+                                    <li>• <b>鞋子：</b> 步道多碎石且有濕滑段落，建議著<b>中高筒登山鞋</b>。</li>
+                                    <li>• <b>光線：</b> 早上 11 點前光線最佳，湖面色彩最亮眼。</li>
+                                    <li>• <b>安托爾諾湖 (Antorno)：</b> 回程順路造訪的小湖，是拍攝三尖山倒影的秘境。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 text-sm text-gray-500 border-t pt-4 italic">
+                    📍 住宿：科爾蒂納丹佩佐附近。
+                </div>
+            </div>
+
+
+            <div id="day6" class="bg-white p-6 rounded-xl shadow-md mb-6" data-video-id="mnLOqSEg0_8" data-day-name="五塔 導覽"
+                data-slide-url="https://www.canva.com/design/DAG9nh1Yv1Y/bQCX_SDTeGe3cTyF2JPZfQ/view?embed">
+                <h4 class="text-xl font-semibold text-gray-800 mb-3">第 6 天：高山隘口與二戰遺跡 - 五塔 (Cinque Torri) 與拉加祖瓦伊山 (Lagazuoi)</h4>
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="flex-1 text-sm text-gray-700">
+                        <div class="bg-blue-50 p-5 rounded-lg border border-blue-200 mb-6">
+                            <h5 class="font-bold text-blue-900 mb-3 text-base flex items-center">
+                                <span class="mr-2">🚠</span> 纜車攻略 (SuperSummer Card 高 CP 日)
+                            </h5>
+                            <p class="mb-2">這兩座纜車單價高且距離近，是發揮卡片價值極高的一天。</p>
+                            <ul class="list-disc list-inside space-y-1 ml-2">
+                                <li><b>必搭 1：</b> Funivia Lagazuoi (€ 25+，含在卡內)。</li>
+                                <li><b>必搭 2：</b> Seggiovia 5 Torri (€ 20+，含在卡內)。</li>
+                                <li><b>推薦路線：</b> 先往 Passo Giau 拍照，再回頭玩五塔與拉加祖瓦伊。</li>
+                            </ul>
+                        </div>
+
+                        <h5 class="font-bold text-blue-800 mb-3 text-lg">🥾 歷史與風景規劃</h5>
+                        <ul class="space-y-4">
+                            <li>
+                                <b class="text-gray-900">09:00 - 11:30 | 賈烏山口 (Passo Giau) 的雲端</b>
+                                <p class="ml-4 text-gray-600">這裡被譽為多洛米蒂最美隘口。建議徒步前往 <b>Rifugio Nuvolau</b>，擁有「遺世獨立」的 360 度全景視野，俯瞰五塔全貌。</p>
+                            </li>
+                            <li>
+                                <b class="text-gray-900">12:00 - 14:00 | 五塔 (Cinque Torri) 露天博物館</b>
+                                <p class="ml-4 text-gray-600">搭乘吊椅上山。這裡是 WWI 戰場遺址，可在巨大的岩塔間穿梭，參觀修復後的戰壕與指揮部。</p>
+                            </li>
+                            <li>
+                                <b class="text-gray-900">14:30 - 16:30 | 拉加祖瓦伊 (Lagazuoi) 雲端視界</b>
+                                <p class="ml-4 text-gray-600">搭乘高空纜車直達 2752m。這裡的景色非常壯絕，您可以選擇走下山的<b>戰爭隧道 (Tunnels)</b>，體驗當年的艱辛（需頭燈）。</p>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="w-full md:w-1/3 lg:w-5/12">
+                        <div class="sticky top-24">
+                            <div class="rounded-xl overflow-hidden shadow-inner border border-gray-100">
+                                <iframe
+                                    src="https://www.google.com/maps/d/embed?mid=12G87Z7KnWlaJvVQjU7RDFD07qTWu18Q&ehbc=2E312F"
+                                    width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy">
+                                </iframe>
+                            </div>
+                            <div class="mt-4 bg-yellow-50 p-4 rounded-lg border border-yellow-200 text-xs text-gray-700">
+                                <h6 class="font-bold mb-2">💡 必備注意事項</h6>
+                                <ul class="space-y-1">
+                                    <li>• <b>隧道探險：</b> 若要走 Lagazuoi 隧道，務必自備<b>頭燈 (Headlamp)</b>，手機光線不足。</li>
+                                    <li>• <b>防滑：</b> 隧道內潮濕且坡度陡，需穿著<b>止滑力強的登山鞋</b>。</li>
+                                    <li>• <b>最後纜車：</b> 留意最後下山班次（通常為 16:40-17:00）。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 text-sm text-gray-500 border-t pt-4 italic">
+                    📍 住宿：科爾蒂納丹佩佐附近。
+                </div>
+            </div>
+
+
+            <div id="day7" class="bg-white p-6 rounded-xl shadow-md mb-6" data-video-id="7Kz79l-aNXI" data-day-name="塞拉山口 導覽"
+                data-slide-url="https://www.canva.com/design/DAG9n63Te1E/eZzzgcCULTqSiTTifmuAmw/view?embed">
+                <h4 class="text-xl font-semibold text-gray-800 mb-3">第 7 天：多洛米蒂核心巡禮 - 塞拉山口 (Passo Sella) 與 波多伊山口 (Passo Pordoi)</h4>
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="flex-1 text-sm text-gray-700">
+                        <div class="bg-emerald-50 p-5 rounded-lg border border-emerald-200 mb-6">
+                            <h5 class="font-bold text-emerald-800 mb-3 text-base flex items-center">
+                                <span class="mr-2">🚠</span> 雙山口纜車連發 (SuperSummer Card 必刷)
+                            </h5>
+                            <ul class="list-disc list-inside space-y-1 ml-2">
+                                <li><b>第一站：</b> Forcella Sassolungo (棺材纜車) - 體驗跑步上車的樂趣。</li>
+                                <li><b>第二站：</b> Funivia Sass Pordoi - 直達 2950m「多洛米蒂露台」。</li>
+                                <li><b>推薦路線：</b> 從 Cortina 出發，經由三個隘口抵達 San Lugano，全程皆景。</li>
+                            </ul>
+                        </div>
+
+                        <h5 class="font-bold text-blue-800 mb-3 text-lg">📸 行程規劃與亮點</h5>
+                        <ul class="space-y-4">
+                            <li>
+                                <b class="text-gray-900">09:00 - 11:00 | 塞拉山口 (Passo Sella) 探險</b>
+                                <p class="ml-4 text-gray-600">搭乘獨特的<b>棺材纜車</b>直達長石山 (Sassolungo) 的心臟。若不敢搭乘，可在山口處漫步拍攝這座巨大的石灰岩壁。</p>
+                            </li>
+                            <li>
+                                <b class="text-gray-900">11:00 - 12:30 | 波多伊山口 (Passo Pordoi) 登頂</b>
+                                <p class="ml-4 text-gray-600">搭乘纜車僅需幾分鐘即可抵達 <b>Sass Pordoi (2950m)</b>。這裡像月球表面一樣荒涼，能 360 度俯瞰所有經典高峰。</p>
+                            </li>
+                            <li>
+                                <b class="text-gray-900">13:00 - 14:30 | 高山草甸午餐時光</b>
+                                <p class="ml-4 text-gray-600">前往 <b>Rifugio Friedrich August</b>。這裡有著名的<b>柏林甜甜圈 (Krapfen)</b>，是登山客公認的全區第一美食。</p>
+                            </li>
+                            <li>
+                                <b class="text-gray-900">15:00 - 17:30 | 前往西側基地 San Lugano</b>
+                                <p class="ml-4 text-gray-600">沿著景觀優美的大道向西行駛，入住位於 Val di Fiemme 入口處的寧靜小鎮 San Lugano。</p>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="w-full md:w-1/3 lg:w-5/12">
+                        <div class="sticky top-24">
+                            <div class="rounded-xl overflow-hidden shadow-inner border border-gray-100">
+                                <iframe
+                                    src="https://www.google.com/maps/d/embed?mid=1mmKarXdkzNuTQTptDUAww-Jvve4Em-k&ehbc=2E312F"
+                                    width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy">
+                                </iframe>
+                            </div>
+                            <div class="mt-4 bg-orange-50 p-4 rounded-lg border border-orange-100 text-xs text-gray-700">
+                                <h6 class="font-bold mb-2">💡 美食與駕駛提示</h6>
+                                <ul class="space-y-1">
+                                    <li>• <b>甜點：</b> Krapfen 每天限量，建議下午 2 點前抵達山屋。</li>
+                                    <li>• <b>溫差：</b> Sass Pordoi 山頂風大且冷，即使山下 25 度，上面可能僅 10 度。</li>
+                                    <li>• <b>山路：</b> 今天的 S-Curve 彎道極多，駕駛需保持專注，副駕請備好暈車藥。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 text-sm text-gray-500 border-t pt-4 italic">
+                    📍 住宿：San Lugano 附近小鎮。
+                </div>
+            </div>
+
+
+            <div id="day8" class="bg-white p-6 rounded-xl shadow-md mb-6" data-video-id="IthCUE9d2D0" data-day-name="塞切達山 導覽"
+                data-slide-url="https://www.canva.com/design/DAG9ngXf5l4/MUhOMg5faROEcK3Y4rtOeA/view?embed">
+                <h4 class="text-xl font-semibold text-gray-800 mb-3">第 8 天：鋸齒山脊的震撼 - 塞切達山 (Seceda) 刀鋒漫步</h4>
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="flex-1 text-sm text-gray-700">
+                        <div class="bg-red-50 p-5 rounded-lg border border-red-200 mb-6">
+                            <h5 class="font-bold text-red-800 mb-3 text-base flex items-center">
+                                <span class="mr-2">⚠️</span> 2026 預約與收費新制
+                            </h5>
+                            <ul class="list-disc list-inside space-y-1 ml-2">
+                                <li><b>纜車時段預約：</b> Ortisei–Seceda 纜車需<b>線上預購且選定時段</b>。</li>
+                                <li><b>山脊門票：</b> 步道入口設有旋轉門，每人需收費 <b>€ 5</b> (可感應信用卡)。</li>
+                                <li><b>SuperSummer Card：</b> 此纜車<span class="text-red-600 font-bold">不適用</span>天數券，建議用點數卡扣點。</li>
+                            </ul>
+                        </div>
+
+                        <h5 class="font-bold text-blue-800 mb-3 text-lg">🥾 刀鋒山脊健行規劃</h5>
+                        <ul class="space-y-4">
+                            <li>
+                                <b class="text-gray-900">08:30 - 09:30 | 奧蒂塞伊 (Ortisei) 出發</b>
+                                <p class="ml-4 text-gray-600">善用鎮上的<b>自動扶梯</b>直達纜車站。搭乘兩段纜車直登 2500m，迎接多洛米蒂最標誌性的鋸齒山脊。</p>
+                            </li>
+                            <li>
+                                <b class="text-gray-900">09:30 - 11:30 | 刀鋒山脊 (Seceda Ridgeline) 攝影</b>
+                                <p class="ml-4 text-gray-600">沿著山脊線步行。早上是剪影般的層次美，建議往 <b>Pieralongia (雙塔巨岩)</b> 方向前行，那是攝影師最愛的構圖點。</p>
+                            </li>
+                            <li>
+                                <b class="text-gray-900">11:30 - 13:30 | 高山草甸與山屋午餐</b>
+                                <p class="ml-4 text-gray-600">在 Baita Troier 或 Sofie 山屋稍作停留。一邊喝著噴火酒 (Bombardino)，一邊對著壯闊的奧德爾山群 (Odle) 放空。</p>
+                            </li>
+                            <li>
+                                <b class="text-gray-900">14:00 - 16:00 | 拉謝薩 (Rasciesa) 紅色小火車</b>
+                                <p class="ml-4 text-gray-600">下山後若有體力，可搭乘鎮上另一側的紅色纜索鐵路。這段包含在卡內，氛圍輕鬆，適合為 Seceda 畫下句點。</p>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="w-full md:w-1/3 lg:w-5/12">
+                        <div class="sticky top-24">
+                            <div class="rounded-xl overflow-hidden shadow-inner border border-gray-100">
+                                <iframe
+                                    src="https://www.google.com/maps/d/embed?mid=147SoH7bi5N12rnaeG9UgTeEKMKNqN7w&ehbc=2E312F"
+                                    width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy">
+                                </iframe>
+                            </div>
+                            <div class="mt-4 bg-emerald-50 p-4 rounded-lg border border-emerald-100 text-xs text-gray-700">
+                                <h6 class="font-bold mb-2">📸 攝影專業建議</h6>
+                                <ul class="space-y-1">
+                                    <li>• <b>構圖：</b> 將步道上的「人」納入畫面，更能凸顯山體的宏偉比例。</li>
+                                    <li>• <b>光線：</b> 若想拍出鮮綠色的山坡，下午 2 點後的順光最理想。</li>
+                                    <li>• <b>雲霧：</b> Seceda 雲霧變化快，若遇白牆請在山屋等待 20 分鐘，通常會散開。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 text-sm text-gray-500 border-t pt-4 italic">
+                    📍 住宿：San Lugano 或 Ortisei 附近。
+                </div>
+            </div>
+
+
+            <div id="day9" class="bg-white p-6 rounded-xl shadow-md mb-6" data-video-id="viHroWHLc78" data-day-name="休斯高原 導覽"
+                data-slide-url="https://www.canva.com/design/DAG9n-2rT90/wpQ5tTRVjlbFQaBF2g7rOA/view?embed">
+                <h4 class="text-xl font-semibold text-gray-800 mb-3">第 9 天：歐洲最大高山草甸 - 休斯高原 (Alpe di Siusi)</h4>
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="flex-1 text-sm text-gray-700">
+                        <div class="bg-orange-50 p-5 rounded-lg border border-orange-200 mb-6">
+                            <h5 class="font-bold text-orange-800 mb-3 text-base flex items-center">
+                                <span class="mr-2">🚗</span> 2026 交通管制必讀
+                            </h5>
+                            <p class="mb-3">休斯高原實施嚴格交通管制，建議搭乘纜車以避開高額停車費。</p>
+                            <ul class="list-disc list-inside space-y-1 ml-2">
+                                <li><b>自駕限制：</b> 09:00 - 17:00 <b>禁止私家車</b>進入高原道路（除非住宿於此）。</li>
+                                <li><b>早起策略：</b> 若想自駕進入，必須在 <b>09:00 之前</b> 通過收費站。</li>
+                                <li><b>纜車方案：</b> 從 Ortisei 搭乘紅色圓形纜車 (Mont Sëuc) 直達，省時且包含在 SuperSummer Card 內。</li>
+                            </ul>
+                        </div>
+
+                        <h5 class="font-bold text-blue-800 mb-3 text-lg">🌼 雲端草甸探索規劃</h5>
+                        <ul class="space-y-4">
+                            <li>
+                                <b class="text-gray-900">08:30 - 11:30 | 夢幻草甸清晨散步</b>
+                                <p class="ml-4 text-gray-600">漫步在起伏的綠意中，這裡有數百種高山植物。推薦前往著名的「單獨小屋」拍照點，背景就是壯闊的長石山。</p>
+                            </li>
+                            <li>
+                                <b class="text-gray-900">11:30 - 13:30 | 高山景觀午餐 (Rifugio Rauch)</b>
+                                <p class="ml-4 text-gray-600">在視野極佳的露台享用南提洛爾美食。推薦嘗試當地的<b>高山起司拼盤</b>與香草茶。</p>
+                            </li>
+                            <li>
+                                <b class="text-gray-900">13:30 - 15:30 | 跳島式纜車體驗</b>
+                                <p class="ml-4 text-gray-600">善用卡片搭乘 Florian 或 Panorama 吊椅。像搭巴士一樣輕鬆切換景觀，順便在草地尋找土撥鼠的身影。</p>
+                            </li>
+                            <li>
+                                <b class="text-gray-900">16:00 - 17:30 | 悠閒下午茶與返回</b>
+                                <p class="ml-4 text-gray-600">在 Compatsch 區逛逛特色小店，或搭乘馬車體驗傳統的阿爾卑斯風情，隨後搭纜車返回鎮上。</p>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="w-full md:w-1/3 lg:w-5/12">
+                        <div class="sticky top-24">
+                            <div class="rounded-xl overflow-hidden shadow-inner border border-gray-100">
+                                <iframe
+                                    src="https://www.google.com/maps/d/embed?mid=1XqfEgwXW6h4iBz9jWrjeN_xCP6tysJE&ehbc=2E312F"
+   
