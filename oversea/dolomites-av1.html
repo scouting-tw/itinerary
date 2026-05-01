@@ -69,6 +69,23 @@
             transform: translateY(-5px);
         }
 
+        /* D5-D11 穩定雙欄：左側主內容、右側圖片+注意事項 */
+        @media (min-width: 700px) {
+            .stable-two-col {
+                display: grid !important;
+                grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) !important;
+                column-gap: 2rem !important;
+            }
+
+            .stable-two-col > .stable-left {
+                grid-column: 1 !important;
+            }
+
+            .stable-two-col > .stable-right {
+                grid-column: 2 !important;
+            }
+        }
+
         
 
         /* 音樂播放器隱藏容器 */
@@ -796,8 +813,8 @@
                 </div>
 
                 <div class="content-block">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div class="md:col-span-2">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 stable-two-col">
+                        <div class="md:col-span-2 stable-left">
                             <p class="text-lg leading-relaxed text-gray-700 mb-6">
                                 這段行程將帶您進入多洛米蒂山脈最富多樣性的區域，從二戰歷史遺跡一路健行到最夢幻的高山湖泊 <b>Lago Federa</b>。視覺景觀變化極大，是 AV1 經典中的精華。
                             </p>
@@ -876,7 +893,7 @@
                             </div>
                         </div>
 
-                        <div class="flex flex-col gap-6">
+                        <div class="flex flex-col gap-6 stable-right">
                             <div class="group relative overflow-hidden rounded-2xl shadow-lg">
                                 <img src="https://www.kbecan.com/wp-content/uploads/2024/10/Dolomites_Cinque_Torri_family_trip_climbing_07.jpg"
                                     alt="Cinque Torri"
@@ -923,8 +940,8 @@
                 </div>
 
                 <div class="content-block">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div class="md:col-span-2">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 stable-two-col">
+                        <div class="md:col-span-2 stable-left">
                             <p class="text-lg leading-relaxed text-gray-700 mb-6">
                                 今日行程將帶您跨越兩大巨頭：<b>Croda da Lago</b> 與 <b>Monte Pelmo</b> 的領地，抵達壯麗的 <b>Civetta (奇維塔山)</b> 腳下。路程長且海拔起伏大，是體力與耐力的雙重考驗。
                             </p>
@@ -994,7 +1011,7 @@
                             </div>
                         </div>
 
-                        <div class="flex flex-col gap-6">
+                        <div class="flex flex-col gap-6 stable-right">
                             <div class="group relative overflow-hidden rounded-2xl shadow-lg">
                                 <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/14/bf/e5/b2/il-laghetto-ai-piedi.jpg?w=1200&h=-1&s=1"
                                     alt="Lago Coldai"
@@ -1040,8 +1057,8 @@
                 </div>
 
                 <div class='content-block'>
-                    <div class='grid grid-cols-1 md:grid-cols-3 gap-8'>
-                        <div class='md:col-span-2'>
+                    <div class='grid grid-cols-1 md:grid-cols-3 gap-8 stable-two-col'>
+                        <div class='md:col-span-2 stable-left'>
                             <p class='text-lg leading-relaxed text-gray-700 mb-6'>
                                 這段行程將帶您沿著多洛米蒂最令人敬畏的地標 —— <b>Civetta (奇維塔山)</b> 的「西北巨牆」（The Northwest Face）行進。這堵牆高達 1,200 公尺，橫跨約 4 公里，是全球登山界的傳奇。
                             </p>
@@ -1111,7 +1128,7 @@
                             </div>
                         </div>
 
-                        <div class='flex flex-col gap-6'>
+                        <div class='flex flex-col gap-6 stable-right'>
                             <div class='group relative overflow-hidden rounded-2xl shadow-lg'>
                                 <img src='https://rifugiotissi.com/Images/Gallery/Normale/3/g4.jpg' 
                                     alt='Civetta Northwest Face'
@@ -1157,8 +1174,8 @@
                 </div>
 
                 <div class="content-block">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div class="md:col-span-2">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 stable-two-col">
+                        <div class="md:col-span-2 stable-left">
                             <p class="text-lg leading-relaxed text-gray-700 mb-6">
                                 今日行程將帶您繞行至 <b>Moiazza 山群</b> 的腳下，這是 Civetta 巨型山塊的南端延伸。這段路徑與前幾天的巨牆相比，會出現較多的森林綠蔭與高山草甸，風景更為柔和但依然壯闊。
                             </p>
@@ -1221,7 +1238,7 @@
                             </div>
                         </div>
 
-                        <div class="flex flex-col gap-6">
+                        <div class="flex flex-col gap-6 stable-right">
                             <div class="group relative overflow-hidden rounded-2xl shadow-lg">
                                 <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhSNiUdsi4APZSk8pmCdYouLRgO8iKH3CZm1TTlQomcq6D6BfQDo9ub7UEArOcopQYI7gdjYMEnT7mioDyFSVig8Vtnh49RUhSSdHSFe7bL2rvmKAu9_JKo_P8fyW_zNG37v5SS3oaVXlvA/s1600/Il+rifugio+Carestiato+con+la+Moiazza+dietro.JPG" 
                                     alt="Rifugio Carestiato"
@@ -1267,8 +1284,8 @@
                 </div>
 
                 <div class="content-block">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div class="md:col-span-2">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 stable-two-col">
+                        <div class="md:col-span-2 stable-left">
                             <p class="text-lg leading-relaxed text-gray-700 mb-6">
                                 今日行程將帶您正式進入多洛米蒂南部的 <b>Dolomiti Bellunesi 國家公園</b> 範圍。這是一段「遠離塵囂」的路線，比起前幾天熱門的區域，這裡更加原始、安靜，步道充滿了野性的美感。
                             </p>
@@ -1331,7 +1348,7 @@
                             </div>
                         </div>
 
-                        <div class="flex flex-col gap-6">
+                        <div class="flex flex-col gap-6 stable-right">
                             <div class="group relative overflow-hidden rounded-2xl shadow-lg">
                                 <img src="https://www.planetmountain.com/uploads/img/1/136940.jpg" 
                                     alt="Rifugio Pramperet"
@@ -1378,8 +1395,8 @@
                 </div>
 
                 <div class="content-block">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div class="md:col-span-2">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 stable-two-col">
+                        <div class="md:col-span-2 stable-left">
                             <p class="text-lg leading-relaxed text-gray-700 mb-6">
                                 這段行程標誌著您 <b>Alta Via 1 (AV1)</b> 徒步之旅的倒數第二段，您將正式深入 <b>Dolomiti Bellunesi 國家公園</b> 的核心心臟地帶。這是一段極其原始、荒涼且充滿力量感的路徑。
                             </p>
@@ -1443,7 +1460,7 @@
 
                         </div>
 
-                        <div class="flex flex-col gap-6">
+                        <div class="flex flex-col gap-6 stable-right">
                             <div class="group relative overflow-hidden rounded-2xl shadow-lg">
                                 <img src="https://www.visitdolomitibellunesi.com/imports/images/importedObj/rifugio-furio-bianchet-1cd69842-70e0-4d04-a6e3-79f4775c92c8/76291/image-thumb__76291__thumb1920/images-trn-1-7d07f6b2-4695-4a36-b7d8-be997174880c-99-image.jpg" 
                                     alt="Refuge Furio Bianchet"
@@ -1490,8 +1507,8 @@
                 </div>
 
                 <div class="content-block">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div class="md:col-span-2">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 stable-two-col">
+                        <div class="md:col-span-2 stable-left">
                             <p class="text-lg leading-relaxed text-gray-700 mb-6">
                                 這是您 <b>Alta Via 1 (AV1)</b> 徒步之旅的最後一哩路。這段行程將帶您從山林回到文明，並穿越義大利北部的山谷回到大都會米蘭。La Pissa 巴士班次固定且不多，時間銜接是今天的關鍵。
                             </p>
@@ -1553,7 +1570,7 @@
                             </div>
                         </div>
 
-                        <div class="flex flex-col gap-6">
+                        <div class="flex flex-col gap-6 stable-right">
                             <div class="group relative overflow-hidden rounded-2xl shadow-lg">
                                 <img src="https://www.dolomiti.it/storage/localities/21264/conversions/belluno_vista_dal_ponte_iStock-tablet.jpg" 
                                     alt="Belluno Train Station"
@@ -1602,8 +1619,8 @@
             </div>
 
             <div class="content-block">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="md:col-span-2">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 stable-two-col">
+                        <div class="md:col-span-2 stable-left">
                         <p class="text-lg leading-relaxed text-gray-700 mb-6">
                             在米蘭享用最後一頓正宗的義大利早餐後，您可以前往米蘭大教堂 (Duomo) 做最後的巡禮，或是直接前往機場，結束這段為期 12 天、橫跨阿爾卑斯精華的壯麗旅程。
                         </p>
@@ -1644,7 +1661,7 @@
                     </div>
 
                     <!-- 右側提示欄 -->
-                    <div class="flex flex-col gap-6">
+                    <div class="flex flex-col gap-6 stable-right">
                         <div class="group relative overflow-hidden rounded-2xl shadow-lg">
                             <img src="https://images.unsplash.com/photo-1520106212299-d99c443e4568?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                                 alt="Milano Duomo" class="w-full h-64 object-cover transform group-hover:scale-110 transition duration-500">
