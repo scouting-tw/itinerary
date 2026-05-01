@@ -69,6 +69,23 @@
             transform: translateY(-5px);
         }
 
+        /* 強制桌機版左右欄：左側內容、右側圖片+注意事項 */
+        @media (min-width: 900px) {
+            .day-card .content-block>.grid {
+                display: grid !important;
+                grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) !important;
+                column-gap: 2rem !important;
+            }
+
+            .day-card .content-block>.grid>.md\:col-span-2 {
+                grid-column: 1 !important;
+            }
+
+            .day-card .content-block>.grid>div:last-child {
+                grid-column: 2 !important;
+            }
+        }
+
         
 
         /* 音樂播放器隱藏容器 */
@@ -610,14 +627,14 @@
                                 </p>
                             </div>
 
-<div class="bg-emerald-600/10 p-5 rounded-xl border border-emerald-600/20 mt-6">
-                            <h6 class="font-bold text-emerald-800 text-sm mb-2 flex items-center">
-                                <span class="mr-2">🏠</span> 2026 山屋提醒：Malga Pices Fanes
-                            </h6>
-                            <p class="text-[11px] text-emerald-900 leading-relaxed font-medium">
-                                這家溫馨的木質調山屋依然是熱門首選。其 <b>Speck 拼盤 (南提洛火腿)</b> 是招牌美食。請務必再次檢查您的預約確認信。
-                            </p>
-                        </div>
+                            <div class="bg-emerald-600/10 p-5 rounded-xl border border-emerald-600/20 mt-6">
+                                <h6 class="font-bold text-emerald-800 text-sm mb-2 flex items-center">
+                                    <span class="mr-2">🏠</span> 2026 山屋提醒：Malga Pices Fanes
+                                </h6>
+                                <p class="text-[11px] text-emerald-900 leading-relaxed font-medium">
+                                    這家溫馨的木質調山屋依然是熱門首選。其 <b>Speck 拼盤 (南提洛火腿)</b> 是招牌美食。請務必再次檢查您的預約確認信。
+                                </p>
+                            </div>
                         </div>
                     </div>
 
@@ -642,15 +659,13 @@
                                 <p><b>● 天氣風險：</b> 高原易聚雷雨。若在 Pederü 發現雲層變黑，請縮短停留時間，盡快通過暴露路段。</p>
                                 <p><b>● 斷網提醒：</b> 進入 Fanes 高原後手機信號微弱，請確保已預載 <b>AllTrails</b> 離線地圖。</p>
                             </div>
-                        </div>
-
-                        
+                        </div>                        
                     </div>
                 </div>
             </div>
         </div>
 
-            <div id="day4" class="day-card mb-8" data-video-id="BLI5hZxVtR0"
+        <div id="day4" class="day-card mb-8" data-video-id="BLI5hZxVtR0"
                 data-day-name="Malga Pices Fanes → Rifugio Col Gallina 導覽"
                 data-slide-url="https://docs.google.com/presentation/d/e/2PACX-1vQc-ciBabVUZjxwycA4GMac67ixYctTVthykU5V1UQttaeBNsj6kqaTme7m_xC5yJRM4BtX8N1yQi3O/embed?start=false&loop=false">
                 <div class="flex flex-col md:flex-row justify-between items-start mb-6">
