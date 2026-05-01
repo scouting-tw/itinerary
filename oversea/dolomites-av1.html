@@ -69,38 +69,6 @@
             transform: translateY(-5px);
         }
 
-        /* 強制桌機版左右欄：左側內容、右側圖片+注意事項 */
-        @media (min-width: 900px) {
-            .day-card .content-block>.grid {
-                display: grid !important;
-                grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) !important;
-                column-gap: 2rem !important;
-            }
-
-            .day-card .content-block>.grid>.md\:col-span-2 {
-                grid-column: 1 !important;
-            }
-
-            .day-card .content-block>.grid>div:last-child {
-                grid-column: 2 !important;
-            }
-
-            /* D5 專用強制雙欄，避免欄位錯位 */
-            .day5-layout {
-                display: grid !important;
-                grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) !important;
-                column-gap: 2rem !important;
-            }
-
-            .day5-layout > .md\:col-span-2 {
-                grid-column: 1 !important;
-            }
-
-            .day5-layout > .day5-right {
-                grid-column: 2 !important;
-            }
-        }
-
         
 
         /* 音樂播放器隱藏容器 */
@@ -828,7 +796,7 @@
                 </div>
 
                 <div class="content-block">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 day5-layout">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <div class="md:col-span-2">
                             <p class="text-lg leading-relaxed text-gray-700 mb-6">
                                 這段行程將帶您進入多洛米蒂山脈最富多樣性的區域，從二戰歷史遺跡一路健行到最夢幻的高山湖泊 <b>Lago Federa</b>。視覺景觀變化極大，是 AV1 經典中的精華。
@@ -908,7 +876,7 @@
                             </div>
                         </div>
 
-                        <div class="flex flex-col gap-6 day5-right">
+                        <div class="flex flex-col gap-6">
                             <div class="group relative overflow-hidden rounded-2xl shadow-lg">
                                 <img src="https://www.kbecan.com/wp-content/uploads/2024/10/Dolomites_Cinque_Torri_family_trip_climbing_07.jpg"
                                     alt="Cinque Torri"
